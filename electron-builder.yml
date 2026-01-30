@@ -1,0 +1,34 @@
+appId: com.noroeste.app
+productName: Noroeste
+copyright: Copyright © 2025 Noroeste
+directories:
+  output: dist-electron
+  buildResources: build
+files:
+  - dist/**/*
+  - electron/**/*
+  - package.json
+
+publish:
+  provider: github
+  owner: LaGiGa
+  repo: noroeste-jw-releases
+  releaseType: release
+
+win:
+  target: 
+    - target: nsis
+      arch:
+        - x64
+  artifactName: ${productName}-Setup-${version}.${ext}
+  icon: public/icon.ico
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  installerIcon: public/icon.ico
+  uninstallerIcon: public/icon.ico
+  runAfterFinish: true
+  shortcutName: "Noroeste"

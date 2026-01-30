@@ -1,0 +1,826 @@
+interface HistoricoItem {
+  data: string;
+  numeroDiscurso: number;
+  tema: string;
+  orador: string;
+  congregacao?: string;
+}
+
+export const HISTORICO_DISCURSOS: HistoricoItem[] = [
+  {
+    "data": "2026-06-28",
+    "numeroDiscurso": 140,
+    "tema": "140. Quem é realmente Jesus Cristo?",
+    "orador": "Edilson Almeida"
+  },
+  {
+    "data": "2026-06-14",
+    "numeroDiscurso": 184,
+    "tema": "184. A morte é o fim de tudo?",
+    "orador": "Dourivan Miranda"
+  },
+  {
+    "data": "2026-05-24",
+    "numeroDiscurso": 134,
+    "tema": "134. Será que os cristãos precisam guardar o sábado?",
+    "orador": "Clécio Morais"
+  },
+  {
+    "data": "2026-05-17",
+    "numeroDiscurso": 23,
+    "tema": "23. A vida tem objetivo",
+    "orador": "Roberto Apinagé"
+  },
+  {
+    "data": "2026-05-03",
+    "numeroDiscurso": 39,
+    "tema": "39. Jesus Cristo vence o mundo — Como e quando?",
+    "orador": "Alonso Gomes"
+  },
+  {
+    "data": "2026-04-29",
+    "numeroDiscurso": 97,
+    "tema": "97. Permaneçamos inculpes em meio a uma geração pervertida",
+    "orador": "André Almeida"
+  },
+  {
+    "data": "2026-04-05",
+    "numeroDiscurso": 167,
+    "tema": "167. Ajamos sabiamente num mundo insensato",
+    "orador": "Stanlley Neres"
+  },
+  {
+    "data": "2026-03-01",
+    "numeroDiscurso": 128,
+    "tema": "128. É o inferno um lugar de tormento ardente?",
+    "orador": "Roberto Apinagé"
+  },
+  {
+    "data": "2026-02-01",
+    "numeroDiscurso": 114,
+    "tema": "114. Apreço pelas maravilhas da criação de Deus",
+    "orador": "Edilson Almeida"
+  },
+  {
+    "data": "2026-01-25",
+    "numeroDiscurso": 66,
+    "tema": "66. Você também vai participar na colheita?",
+    "orador": "Júnior Miranda"
+  },
+  {
+    "data": "2026-01-18",
+    "numeroDiscurso": 135,
+    "tema": "135. A santidade da vida e do sangue",
+    "orador": "Clécio Morais"
+  },
+  {
+    "data": "2026-01-04",
+    "numeroDiscurso": 101,
+    "tema": "101. Jeová é o “Grandioso Criador”",
+    "orador": "Dourivan Miranda"
+  },
+  {
+    "data": "2025-12-28",
+    "numeroDiscurso": 166,
+    "tema": "166. Verdadeira fé — O que é e como mostrar",
+    "orador": "André Almeida"
+  },
+  {
+    "data": "2025-12-21",
+    "numeroDiscurso": 146,
+    "tema": "146. Use a educação para louvar a Jeová",
+    "orador": "Stanlley Neres"
+  },
+  {
+    "data": "2025-12-14",
+    "numeroDiscurso": 190,
+    "tema": "190. Como se cumprirá a promessa de perfeita felicidade familiar",
+    "orador": "Alonso Gomes"
+  },
+  {
+    "data": "2025-12-07",
+    "numeroDiscurso": 117,
+    "tema": "117. Como vencer o mal com o bem",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-11-30",
+    "numeroDiscurso": 57,
+    "tema": "57. Como suportar perseguição",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-11-09",
+    "numeroDiscurso": 1,
+    "tema": "1. Você conhece bem a Deus?",
+    "orador": "Ronaldo Lucindo"
+  },
+  {
+    "data": "2025-10-26",
+    "numeroDiscurso": 48,
+    "tema": "48. Seja leal a Deus mesmo quando for testado",
+    "orador": "André Almeida"
+  },
+  {
+    "data": "2025-10-12",
+    "numeroDiscurso": 27,
+    "tema": "27. Como construir um casamento feliz",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-10-12",
+    "numeroDiscurso": 152,
+    "tema": "152. Armagedom — Por que e quando?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-10-05",
+    "numeroDiscurso": 4,
+    "tema": "4. Que provas temos de que Deus existe?",
+    "orador": "Júnior Miranda"
+  },
+  {
+    "data": "2025-09-28",
+    "numeroDiscurso": 428,
+    "tema": "s-428 O fim das guerras — Como? (discurso da campanha)",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-09-21",
+    "numeroDiscurso": 12,
+    "tema": "12. Deus quer que você respeite quem tem autoridade",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-09-14",
+    "numeroDiscurso": 111,
+    "tema": "111. É possível que a humanidade seja completamente curada?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-09-09",
+    "numeroDiscurso": 66,
+    "tema": "66. Você também vai participar na colheita?",
+    "orador": "André Almeida"
+  },
+  {
+    "data": "2025-09-07",
+    "numeroDiscurso": 35,
+    "tema": "35. É possível viver para sempre? O que você precisa fazer?",
+    "orador": "Stanlley Neres"
+  },
+  {
+    "data": "2025-08-31",
+    "numeroDiscurso": 143,
+    "tema": "143. Confie no Deus de todo consolo",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-08-31",
+    "numeroDiscurso": 169,
+    "tema": "169. Por que ser orientado pela Bíblia?",
+    "orador": "Roberto Apinagé"
+  },
+  {
+    "data": "2025-08-24",
+    "numeroDiscurso": 44,
+    "tema": "44. Como os ensinos de Jesus podem ajudar você? ",
+    "orador": "Roberto Apinagé"
+  },
+  {
+    "data": "2025-08-17",
+    "numeroDiscurso": 7,
+    "tema": "7. Imite a misericórdia de Jeová",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-08-10",
+    "numeroDiscurso": 115,
+    "tema": "115. Não caia nas armadilhas de Satanás",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-08-03",
+    "numeroDiscurso": 103,
+    "tema": "103. Como você pode ter a verdadeira alegria?",
+    "orador": "Roberto Apinagé"
+  },
+  {
+    "data": "2025-07-20",
+    "numeroDiscurso": 158,
+    "tema": "158. Seja corajoso e confie em Jeová",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-07-13",
+    "numeroDiscurso": 67,
+    "tema": "67. Medite na Bíblia e nas criações de Jeová",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-07-06",
+    "numeroDiscurso": 41,
+    "tema": "41. Fiquem parados e vejam como Jeová os salvará",
+    "orador": "Clécio Morais"
+  },
+  {
+    "data": "2025-06-29",
+    "numeroDiscurso": 105,
+    "tema": "105. Somos consolados em todas as nossas tribulações",
+    "orador": "Ronaldo Lucindo"
+  },
+  {
+    "data": "2025-06-22",
+    "numeroDiscurso": 18,
+    "tema": "18. Faça de Jeová a sua fortaleza",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-06-15",
+    "numeroDiscurso": 73,
+    "tema": "73. Você tem “um coração sábio”?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-06-01",
+    "numeroDiscurso": 90,
+    "tema": "90. Faça o máximo para alcançar a verdadeira vida!",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-05-25",
+    "numeroDiscurso": 81,
+    "tema": "81. Quem está qualificado para fazer discípulos?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-05-04",
+    "numeroDiscurso": 92,
+    "tema": "92. O papel da religião nos assuntos do mundo",
+    "orador": "Alonso Gomes"
+  },
+  {
+    "data": "2025-04-20",
+    "numeroDiscurso": 10,
+    "tema": "10. Seja honesto em tudo",
+    "orador": "André Almeida"
+  },
+  {
+    "data": "2025-03-30",
+    "numeroDiscurso": 20,
+    "tema": "20. Chegou o tempo de Deus governar o mundo?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-03-30",
+    "numeroDiscurso": 21,
+    "tema": "21. Dê valor ao seu lugar no Reino de Deus",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-03-23",
+    "numeroDiscurso": 42,
+    "tema": "42. O amor pode vencer o ódio?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-03-22",
+    "numeroDiscurso": 185,
+    "tema": "185. Será que a verdade influencia sua vida?",
+    "orador": "Júnior Miranda"
+  },
+  {
+    "data": "2025-03-06",
+    "numeroDiscurso": 46,
+    "tema": "46. Fortaleça sua confiança em Jeová",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-03-02",
+    "numeroDiscurso": 55,
+    "tema": "55. Você está fazendo um bom nome perante Deus?",
+    "orador": "Ronaldo Lucindo"
+  },
+  {
+    "data": "2025-02-23",
+    "numeroDiscurso": 125,
+    "tema": "125. Por que a humanidade precisa de resgate",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-02-09",
+    "numeroDiscurso": 33,
+    "tema": "33. Quando vai existir verdadeira justiça?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-02-08",
+    "numeroDiscurso": 160,
+    "tema": "160. Mantenha a identidade cristã!",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-02-02",
+    "numeroDiscurso": 88,
+    "tema": "88. Por que viver de acordo com os padrões da Bíblia?",
+    "orador": "Edilson Almeida"
+  },
+  {
+    "data": "2025-01-19",
+    "numeroDiscurso": 188,
+    "tema": "188. Você confia em Jeová?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-01-12",
+    "numeroDiscurso": 76,
+    "tema": "76. Princípios bíblicos — Podem nos ajudar a lidar com os problemas atuais?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2025-01-05",
+    "numeroDiscurso": 191,
+    "tema": "191. Como o amor e a fé vencem o mundo",
+    "orador": "Roberto Apinagé"
+  },
+  {
+    "data": "2024-12-28",
+    "numeroDiscurso": 61,
+    "tema": "61. Nas promessas de quem você confia?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-12-21",
+    "numeroDiscurso": 113,
+    "tema": "113. Jovens — Como vocês podem ter uma vida feliz?",
+    "orador": "Stanlley Neres"
+  },
+  {
+    "data": "2024-12-14",
+    "numeroDiscurso": 41,
+    "tema": "41. Fiquem parados e vejam como Jeová os salvará",
+    "orador": "Clécio Morais"
+  },
+  {
+    "data": "2024-12-07",
+    "numeroDiscurso": 158,
+    "tema": "158. Seja corajoso e confie em Jeová",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-11-30",
+    "numeroDiscurso": 46,
+    "tema": "46. Fortaleça sua confiança em Jeová",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-11-16",
+    "numeroDiscurso": 85,
+    "tema": "85. Boas notícias num mundo violento",
+    "orador": "Edilson Almeida"
+  },
+  {
+    "data": "2024-11-02",
+    "numeroDiscurso": 145,
+    "tema": "145. Quem é semelhante a Jeová, nosso Deus?",
+    "orador": "Júnior Miranda"
+  },
+  {
+    "data": "2024-10-26",
+    "numeroDiscurso": 13,
+    "tema": "13. Qual o ponto de vista de Deus sobre o sexo e o casamento?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-10-19",
+    "numeroDiscurso": 21,
+    "tema": "21. Dê valor ao seu lugar no Reino de Deus",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-10-12",
+    "numeroDiscurso": 174,
+    "tema": "174. Quem se qualificará para entrar no novo mundo de Deus?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-09-21",
+    "numeroDiscurso": 43,
+    "tema": "43. Tudo o que Deus nos pede é para o nosso bem",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-09-14",
+    "numeroDiscurso": 17,
+    "tema": "17. Glorifique a Deus com tudo o que você tem",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-09-04",
+    "numeroDiscurso": 153,
+    "tema": "153. Tenha bem em mente o “atemorizante dia”!",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-08-24",
+    "numeroDiscurso": 176,
+    "tema": "176. Quando haverá verdadeira paz e segurança?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-08-17",
+    "numeroDiscurso": 74,
+    "tema": "74. Os olhos de Jeová estão em todo lugar",
+    "orador": "Alonso Gomes"
+  },
+  {
+    "data": "2024-08-10",
+    "numeroDiscurso": 170,
+    "tema": "170. Quem está qualificado para governar a humanidade?",
+    "orador": "André Almeida"
+  },
+  {
+    "data": "2024-08-05",
+    "numeroDiscurso": 14,
+    "tema": "14. Um povo puro e limpo honra a Jeová",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-07-20",
+    "numeroDiscurso": 179,
+    "tema": "179. Rejeite as fantasias do mundo, empenhe-se pelas realidades do Reino",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-07-13",
+    "numeroDiscurso": 22,
+    "tema": "22. Você está usando bem o que Jeová lhe dá?",
+    "orador": "André Almeida"
+  },
+  {
+    "data": "2024-06-29",
+    "numeroDiscurso": 51,
+    "tema": "51. Será que a verdade da Bíblia está mudando a sua vida?",
+    "orador": "Ronaldo Lucindo"
+  },
+  {
+    "data": "2024-06-22",
+    "numeroDiscurso": 90,
+    "tema": "90. Faça o máximo para alcançar a verdadeira vida!",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-06-15",
+    "numeroDiscurso": 7,
+    "tema": "7. Imite a misericórdia de Jeová",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-06-08",
+    "numeroDiscurso": 100,
+    "tema": "100. Como fazer amizades fortes e verdadeiras",
+    "orador": "Edilson Almeida"
+  },
+  {
+    "data": "2024-06-01",
+    "numeroDiscurso": 159,
+    "tema": "159. Como encontrar segurança num mundo perigoso",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-05-25",
+    "numeroDiscurso": 183,
+    "tema": "183. Desvie seus olhos do que é fútil",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-05-18",
+    "numeroDiscurso": 186,
+    "tema": "186. Sirva em união com o povo feliz de Deus",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-05-11",
+    "numeroDiscurso": 37,
+    "tema": "37. Obedecer a Deus é mesmo a melhor coisa a fazer?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-04-27",
+    "numeroDiscurso": 50,
+    "tema": "50. Como sempre tomar as melhores decisões",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-04-06",
+    "numeroDiscurso": 80,
+    "tema": "80. Você baseia sua esperança na ciência ou na Bíblia?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-03-30",
+    "numeroDiscurso": 8,
+    "tema": "8. Viva para fazer a vontade de Deus",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-03-16",
+    "numeroDiscurso": 132,
+    "tema": "132. Ressurreição — A vitória sobre a morte!",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-03-09",
+    "numeroDiscurso": 11,
+    "tema": "11. Imite a Jesus e não faça parte do mundo",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-02-24",
+    "numeroDiscurso": 79,
+    "tema": "79. Você vai escolher ser amigo de Deus?",
+    "orador": "Roberto Apinagé"
+  },
+  {
+    "data": "2024-02-10",
+    "numeroDiscurso": 127,
+    "tema": "127. O que acontece quando morremos?",
+    "orador": "Stanlley Neres"
+  },
+  {
+    "data": "2024-02-03",
+    "numeroDiscurso": 26,
+    "tema": "26. Você é importante para Deus?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2024-01-20",
+    "numeroDiscurso": 71,
+    "tema": "71. ‘Mantenha-se desperto’ — Por que e como?",
+    "orador": "Stanlley Neres"
+  },
+  {
+    "data": "2024-01-13",
+    "numeroDiscurso": 36,
+    "tema": "36. Será que a vida é só isso?",
+    "orador": "Clécio Morais"
+  },
+  {
+    "data": "2024-01-06",
+    "numeroDiscurso": 32,
+    "tema": "32. Como lidar com as ansiedades da vida",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-12-30",
+    "numeroDiscurso": 118,
+    "tema": "118. Olhemos os jovens do ponto de vista de Jeová",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-12-23",
+    "numeroDiscurso": 143,
+    "tema": "143. Confie no Deus de todo consolo",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-12-16",
+    "numeroDiscurso": 64,
+    "tema": "64. Você ama os prazeres ou a Deus?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-12-09",
+    "numeroDiscurso": 31,
+    "tema": "31. Você tem consciência da sua necessidade espiritual?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-11-18",
+    "numeroDiscurso": 181,
+    "tema": "181. Já é mais tarde do que você imagina?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-11-11",
+    "numeroDiscurso": 115,
+    "tema": "115. Não caia nas armadilhas de Satanás",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-11-04",
+    "numeroDiscurso": 16,
+    "tema": "16. Seja cada vez mais amigo de Jeová",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-10-28",
+    "numeroDiscurso": 78,
+    "tema": "78. Sirva a Jeová com um coração alegre",
+    "orador": "Edilson Almeida"
+  },
+  {
+    "data": "2023-10-14",
+    "numeroDiscurso": 35,
+    "tema": "35. É possível viver para sempre? O que você precisa fazer?",
+    "orador": "Stanlley Neres"
+  },
+  {
+    "data": "2023-10-07",
+    "numeroDiscurso": 54,
+    "tema": "54. Fortaleça sua fé em Deus e em suas promessas",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-09-30",
+    "numeroDiscurso": 177,
+    "tema": "177. Onde encontrar ajuda em tempos de aflição?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-09-23",
+    "numeroDiscurso": 40,
+    "tema": "40. O que vai acontecer em breve?",
+    "orador": "Clécio Morais"
+  },
+  {
+    "data": "2023-09-16",
+    "numeroDiscurso": 95,
+    "tema": "95. Não seja enganado pelo ocultismo!",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-09-02",
+    "numeroDiscurso": 53,
+    "tema": "53. Você pensa como Deus?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-08-26",
+    "numeroDiscurso": 45,
+    "tema": "45. Continue andando no caminho que leva à vida",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-08-19",
+    "numeroDiscurso": 142,
+    "tema": "142. Por que refugiar‑se em Jeová",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-08-12",
+    "numeroDiscurso": 48,
+    "tema": "48. Seja leal a Deus mesmo quando for testado",
+    "orador": "André Almeida"
+  },
+  {
+    "data": "2023-07-29",
+    "numeroDiscurso": 36,
+    "tema": "36. Será que a vida é só isso?",
+    "orador": "Clécio Morais"
+  },
+  {
+    "data": "2023-07-22",
+    "numeroDiscurso": 28,
+    "tema": "28. Mostre respeito e amor no seu casamento",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-07-15",
+    "numeroDiscurso": 192,
+    "tema": "192. Você está no caminho para a vida eterna?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-07-10",
+    "numeroDiscurso": 44,
+    "tema": "44. Como os ensinos de Jesus podem ajudar você? ",
+    "orador": "Alonso Gomes"
+  },
+  {
+    "data": "2023-07-01",
+    "numeroDiscurso": 20,
+    "tema": "20. Chegou o tempo de Deus governar o mundo?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-06-17",
+    "numeroDiscurso": 193,
+    "tema": "193. Os problemas de hoje logo serão coisa do passado",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-06-10",
+    "numeroDiscurso": 180,
+    "tema": "180. A ressurreição — Por que essa esperança deve ser real para você",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-06-03",
+    "numeroDiscurso": 70,
+    "tema": "70. Por que Deus merece sua confiança?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-05-20",
+    "numeroDiscurso": 65,
+    "tema": "65. Como podemos ser pacíficos num mundo cheio de ódio",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-05-13",
+    "numeroDiscurso": 15,
+    "tema": "15. ‘Faça o bem a todos’",
+    "orador": "Roberto Apinagé"
+  },
+  {
+    "data": "2023-05-06",
+    "numeroDiscurso": 77,
+    "tema": "77. “Sempre mostrem hospitalidade”",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-04-22",
+    "numeroDiscurso": 158,
+    "tema": "158. Seja corajoso e confie em Jeová",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-04-15",
+    "numeroDiscurso": 22,
+    "tema": "22. Você está usando bem o que Jeová lhe dá?",
+    "orador": "André Almeida"
+  },
+  {
+    "data": "2023-04-08",
+    "numeroDiscurso": 126,
+    "tema": "126. Quem se salvará?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-03-25",
+    "numeroDiscurso": 108,
+    "tema": "108. Você pode encarar o futuro com confiança!",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-03-18",
+    "numeroDiscurso": 32,
+    "tema": "32. Como lidar com as ansiedades da vida",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-03-11",
+    "numeroDiscurso": 46,
+    "tema": "46. Fortaleça sua confiança em Jeová",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-03-04",
+    "numeroDiscurso": 116,
+    "tema": "116. Escolha sabiamente com quem irá associar‑se!",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-02-18",
+    "numeroDiscurso": 183,
+    "tema": "183. Desvie seus olhos do que é fútil",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-02-11",
+    "numeroDiscurso": 9,
+    "tema": "9. Escute e faça o que a Bíblia diz",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-02-04",
+    "numeroDiscurso": 165,
+    "tema": "165. Os valores de quem você preza?",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-01-28",
+    "numeroDiscurso": 121,
+    "tema": "121. Uma família mundial que será salva da destruição",
+    "orador": "Júnior Miranda"
+  },
+  {
+    "data": "2023-01-21",
+    "numeroDiscurso": 67,
+    "tema": "67. Medite na Bíblia e nas criações de Jeová",
+    "orador": "Não especificado"
+  },
+  {
+    "data": "2023-01-14",
+    "numeroDiscurso": 86,
+    "tema": "86. Como orar a Deus e ser ouvido por ele?",
+    "orador": "Stanlley Neres"
+  },
+  {
+    "data": "2023-01-07",
+    "numeroDiscurso": 187,
+    "tema": "187. Por que um Deus amoroso permite a maldade?",
+    "orador": "Não especificado"
+  }
+];
