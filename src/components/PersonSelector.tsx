@@ -72,9 +72,9 @@ export const PersonSelector: React.FC<PersonSelectorProps> = ({
             pool = pool.filter(p => {
                 if (!p.assignments) return false;
                 if (Array.isArray(assignmentFilter)) {
-                    return assignmentFilter.some(f => p.assignments[f as keyof typeof p.assignments] === true);
+                    return assignmentFilter.some(f => p.assignments?.[f as keyof typeof p.assignments] === true);
                 }
-                return p.assignments[assignmentFilter as keyof typeof p.assignments] === true;
+                 return p.assignments?.[assignmentFilter as keyof typeof p.assignments] === true;
             });
         }
 

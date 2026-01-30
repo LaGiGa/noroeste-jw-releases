@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { GoogleMap, Polygon, Polyline, DrawingManager, Circle, OverlayView, Marker } from '@react-google-maps/api';
+import { GoogleMap, Polygon, Polyline, DrawingManager, Circle, OverlayView } from '@react-google-maps/api';
 import type { Quadra } from '../services/database';
 import { FaTrash, FaPencilAlt, FaExpand, FaCompress, FaDrawPolygon, FaMinus, FaPlus, FaMagic, FaUndo, FaRedo } from 'react-icons/fa';
 

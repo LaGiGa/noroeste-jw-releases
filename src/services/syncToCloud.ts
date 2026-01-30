@@ -98,7 +98,7 @@ export const syncToCloud = async () => {
             address: sanitizeStr(c.address),
             meeting_day: null,
             meeting_time: null,
-            circuit: sanitizeStr(c.circuit)
+            circuit: sanitizeStr((c as any).circuit)
         }));
 
         const { error: _errDelC } = await supabase.from('congregations').delete().neq('id', 'PLACEHOLDER');
