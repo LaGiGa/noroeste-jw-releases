@@ -5,38 +5,63 @@ Este projeto foi configurado para gerar um instalador Windows oficial (`.exe`) e
 ## 1. Estratégia de Repositórios
 
 Para que o auto-update funcione sem expor seu código privado:
-1.  **Código Privado:** Você mantém este código em seu repositório privado normal.
-2.  **Releases Públicos:** Crie um novo repositório **Público** no seu GitHub chamado `noroeste-jw-releases`. Este repositório servirá apenas para hospedar os instaladores e o arquivo de controle de versão (`latest.yml`).
+
+1. **Código Privado:** Você mantém este código em seu repositório privado normal.
+2. **Releases Públicos:** O repositório **Público** `noroeste-jw-releases` hospeda os instaladores e o arquivo de controle de versão (`latest.yml`).
 
 ## 2. Preparação no GitHub
 
-1.  Crie o repositório **Público** `noroeste-jw-releases`.
-2.  Gere um **Token de Acesso Pessoal (PAT)**:
-    *   Vá em `Settings` > `Developer settings` > `Personal access tokens` > `Tokens (classic)`.
-    *   Clique em `Generate new token`.
-    *   Selecione a permissão `repo` (toda a categoria).
-    *   **Copie o token gerado** (você não o verá novamente).
+1. Repositório Público: `https://github.com/LaGiGa/noroeste-jw-releases`.
+2. **Token de Acesso Pessoal (PAT)**:
+    * Necessário para publicar. Deve ter a permissão `repo`.
+    * No PowerShell, o token deve ser definido como variável de ambiente antes do comando de publicação.
 
-## 3. Configuração Local
+## 3. Comandos de Atualização (Resumo)
 
-No arquivo `electron-builder.yml` e `package.json`, substitua `SEU_USUARIO_GITHUB` pelo seu nome de usuário real do GitHub.
+Para realizar uma atualização completa do sistema, siga estes passos no terminal:
 
-Para publicar uma nova versão, você precisa definir o token no seu terminal (PowerShell):
+### Passo 1: Salvar e Enviar Código
+
 ```powershell
-$env:GH_TOKEN = "seu_token_aqui"
+git add .
+git commit -m "descrição das melhorias"
+git push origin main
+```
+
+### Passo 2: Incrementar Versão
+
+Edite o arquivo `package.json` e altere o campo `"version"`.
+
+* Exemplo: de `"1.0.9"` para `"1.1.0"`.
+
+### Passo 3: Criar Tag de Versão
+
+```powershell
+git add package.json
+git commit -m "chore: bump version to 1.1.0"
+git tag v1.1.0
+git push origin main --tags
+```
+
+### Passo 4: Publicar Novo Executável
+
+```powershell
+# Defina seu Token (apenas uma vez por sessão)
+$env:GH_TOKEN = ""
+
+# Compilar e subir para o GitHub Releases
 npm run electron:publish
 ```
 
-## 4. O que foi alterado
+## 4. O que acontece após a publicação?
 
-*   **`package.json`**: Adicionada a dependência `electron-updater` e o script `electron:publish`.
-*   **`electron-builder.yml`**: Configurado para gerar instalador NSIS completo e apontar para o repositório de updates.
-*   **`electron/main.cjs`**: Adicionado o código que verifica por atualizações toda vez que o app abre.
-*   **Aparência**: O app agora usará o ícone em `public/icon.png` para o instalador e o atalho no Windows.
+* O `electron-builder` compila o código, gera o instalador e sobe para a aba "Releases" do repositório `noroeste-jw-releases`.
+* **Auto-Update:** Quando os usuários abrirem o aplicativo instalado, o sistema detectará a nova tag no GitHub e baixará a atualização em segundo plano.
+* **Próxima Inicialização:** Na próxima vez que o usuário abrir o app, a nova versão será instalada automaticamente.
 
-## 5. Como lançar uma nova versão
+## 5. Informações Importantes (Última Atualização)
 
-1.  Aumente a versão no `package.json` (ex: de `1.0.0` para `1.0.1`).
-2.  Execute o comando de publicação com o seu token.
-3.  O `electron-builder` vai compilar o código e subir os arquivos para a aba "Releases" do seu repositório `noroeste-jw-releases`.
-4.  Quando os usuários abrirem o app, eles receberão o aviso de nova versão.
+* **Versão Atual:** 1.1.0
+* **Ambiente Dev:** O modo desenvolvimento (`npm run electron:dev`) agora utiliza uma pasta de dados isolada (`noroeste-dev`) para não conflitar com a versão instalada.
+* **Sincronização Nuvem:** Os botões de sincronização com Supabase estão disponíveis apenas no modo de desenvolvimento por segurança.
+* **Persistência:** Melhorias na lógica de importação garantem que os dados não sejam perdidos ao alternar entre ambientes.
