@@ -1,0 +1,1634 @@
+[
+  {
+    "date": "2025-08-06",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "Júnior Miranda",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "Júnior Miranda",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Edilson Almeida",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Mª de Fátima",
+        "assistant": "Graça Gomes",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Márcia Castro",
+        "assistant": "Mayrla Miranda",
+        "point": "Cultivando o interesse",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Thássio Brandão",
+        "point": "Fazendo discípulos",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Antonio Luciano",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Eduardo Siqueira",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "M Socorro",
+        "assistant": "Mª do Amparo",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Sarah Souza",
+        "assistant": "Eliane Gomes",
+        "point": "Cultivando o interesse",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Jamila F.",
+        "assistant": "Letícia Castro",
+        "point": "Fazendo discípulos",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2025-08-13",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "Stanlley Neres",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "Ronaldo Lucindo",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Marcos Hansen",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Maria Siqueira",
+        "assistant": "Sirlene Lucindo",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Kelcy Siqueira",
+        "assistant": "Sinai Arruda",
+        "point": "Cultivando o interesse",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Miria Kelly",
+        "assistant": "Raquel Silva",
+        "point": "Discurso",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Fábio Gomes",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Júlio César",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Ingrid Kesawin",
+        "assistant": "Isabelly O.",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Sheila Hansen",
+        "assistant": "Vânia Costa",
+        "point": "Cultivando o interesse",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "João Mateus",
+        "point": "Discurso",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2025-08-20",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "Roberto Apinagé",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "Eduardo Miranda",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Thássio Brandão",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Maria Antônia",
+        "assistant": "Liliane Gomes",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Mayara B.",
+        "assistant": "Edileusa P.",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Wideglan P.",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Pedro Arthur",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Miguel Gomes",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Rayane Vieira",
+        "assistant": "Graziele Sousa",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Lívia Miranda",
+        "assistant": "Simone Carneiro",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Deusirene Sousa",
+        "assistant": "Rosilene Silva",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2025-08-27",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "Alonso Gomes",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "André Almeida",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Cícero Reis",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Janaína Santos",
+        "assistant": "Léia Pereira",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Alice Gomes",
+        "assistant": "Geysa Ribeiro",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Luciana Gomes",
+        "assistant": "Maria de Castro",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Osana Matos",
+        "assistant": "Tatiana Lopes",
+        "point": "Necessidades locais",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Pedro Avelino",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Luan Brito",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Geysa Ribeiro",
+        "assistant": "Ildenêr Santos",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Vitória Santos",
+        "assistant": "Mayrla Miranda",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Jacque. Apinagé",
+        "assistant": "Márcia Castro",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2025-09-03",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "Ronaldo Lucindo",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "Alonso Gomes",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Tiago Vieira",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Amanda Borges",
+        "assistant": "Lanna Baltazar",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Tervilene C.",
+        "assistant": "Cristina Neres",
+        "point": "Cultivando o interesse",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Alice Costa",
+        "assistant": "Alcimina Lemos",
+        "point": "Explicando suas crenças",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Carlos Serpa",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "José Neto",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Marcos Hansen",
+        "assistant": "Wideglan P.",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Elisângela M.",
+        "assistant": "Damiana Almeida",
+        "point": "Cultivando o interesse",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "J Fernandes",
+        "point": "Explicando suas crenças",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2025-09-10",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "Clécio Morais",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "Clécio Morais",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Dourivan Miranda",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Edileusa P.",
+        "assistant": "Regiane Morais",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Maria Viana",
+        "assistant": "Liliane Gomes",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "E Siqueira",
+        "point": "Cultivando o interesse",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Evaldo Arruda",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Cícero Reis",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Sarah Souza",
+        "assistant": "Mayara B.",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Íthalo Gomes",
+        "assistant": "Fábio Gomes",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Laura Gomes",
+        "assistant": "Jamila F.",
+        "point": "Cultivando o interesse",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2025-09-17",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "Júnior Miranda",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "Roberto Apinagé",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Ian Gabriel",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Letícia Castro",
+        "assistant": "Idaide Pereira",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Sinai Arruda",
+        "assistant": "Deusirene Sousa",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Redinalva O.",
+        "assistant": "Aline Brandão",
+        "point": "Cultivando o interesse",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Antonio Luciano",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Laércio Avelino",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Simone Carneiro",
+        "assistant": "Janaína Santos",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Eliane Gomes",
+        "assistant": "Mª do Amparo",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Rosilene Silva",
+        "assistant": "Maria de Castro",
+        "point": "Cultivando o interesse",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2025-09-24",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "André Almeida",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "Júnior Miranda",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Íthalo Gomes",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Graziele Sousa",
+        "assistant": "Léia Pereira",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Rayane Vieira",
+        "assistant": "Miria Kelly",
+        "point": "Cultivando o interesse",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Maria Silva",
+        "assistant": "Maria Antônia",
+        "point": "Discurso",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Danielly Câmara",
+        "assistant": "Osana Matos",
+        "point": "Quando surgir problemas no seu casamento, não se esqueça de Jeová",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Júlio César",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Fábio Gomes",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Raquel Silva",
+        "assistant": "Tervilene C.",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Ingrid Kesawin",
+        "assistant": "Kely Oliveira",
+        "point": "Cultivando o interesse",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Thássio Brandão",
+        "point": "Discurso",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2025-10-01",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "Stanlley Neres",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "Stanlley Neres",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Eduardo Siqueira",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Sofia Costa",
+        "assistant": "Alice Costa",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Vânia Costa",
+        "assistant": "Geysa Ribeiro",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "João Mateus",
+        "point": "Cultivando o interesse",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Luan Brito",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Miguel Gomes",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Lanna Baltazar",
+        "assistant": "Jacque. Apinagé",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Cristina Neres",
+        "assistant": "Regiane Morais",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Tatiana Lopes",
+        "assistant": "Damiana Almeida",
+        "point": "Cultivando o interesse",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2025-10-08",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "Roberto Apinagé",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "Ronaldo Lucindo",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Eduardo Miranda",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Alcimina Lemos",
+        "assistant": "Laura Gomes",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Graça Gomes",
+        "assistant": "Deusirene Sousa",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Kelcy Siqueira",
+        "assistant": "Edileusa P.",
+        "point": "Cultivando o interesse",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Isabelly O.",
+        "assistant": "Lariza Leão",
+        "point": "Explicando suas crenças",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Wideglan P.",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Carlos Serpa",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "João Mateus",
+        "assistant": "Thássio Brandão",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Maria Júlia F.",
+        "assistant": "Alice Gomes",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Aline Brandão",
+        "assistant": "Amanda Borges",
+        "point": "Cultivando o interesse",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2025-10-15",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "Alonso Gomes",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Pedro Avelino",
+        "assistant": "José Neto",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Liliane Gomes",
+        "assistant": "Eliane Gomes",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Alice Costa",
+        "assistant": "Sinai Arruda",
+        "point": "Fazendo discípulos",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Ildenêr Santos",
+        "assistant": "Redinalva O.",
+        "point": "Como ter estabilidade quando enfrentar uma tragédia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "José Neto",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      }
+    ]
+  },
+  {
+    "date": "2025-10-21",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "Ronaldo Lucindo",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "Eduardo Miranda",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Pedro Arthur",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Íthalo Gomes",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Vinicius Pereira",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Graziele Sousa",
+        "assistant": "Raquel Silva",
+        "point": "Cultivando o interesse",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Lívia Miranda",
+        "assistant": "Ingrid Kesawin",
+        "point": "Cultivando o interesse",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Cícero Reis",
+        "point": "Discurso",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2025-10-29",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "Rafael Leão",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "Roberto Apinagé",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Ian Gabriel",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Simone Carneiro",
+        "assistant": "Cida Ventura",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Keiliane Brito",
+        "assistant": "Rayane Vieira",
+        "point": "Cultivando o interesse",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Thássio Brandão",
+        "point": "Fazendo discípulos",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Miguel Gomes",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Júlio César",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Mª do Amparo",
+        "assistant": "Cristina Neres",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Maria de Castro",
+        "assistant": "Alice Gomes",
+        "point": "Cultivando o interesse",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Jacque. Apinagé",
+        "assistant": "Eliane Gomes",
+        "point": "Fazendo discípulos",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2025-11-05",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "Clécio Morais",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "André Almeida",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Wideglan P.",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "M Socorro",
+        "assistant": "Rosilene Silva",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Mª de Fátima",
+        "assistant": "Elisângela M.",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Osana Matos",
+        "assistant": "Mayrla Miranda",
+        "point": "Discurso",
+        "room": "Principal"
+      },
+      {
+        "studentName": "João Mateus",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Luan Brito",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Geysa Ribeiro",
+        "assistant": "Maria Silva",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Deusirene Sousa",
+        "assistant": "Lanna Baltazar",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "José Neto",
+        "point": "Discurso",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2025-11-12",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "Stanlley Neres",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "Alonso Gomes",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Vinicius Pereira",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Sarah Souza",
+        "assistant": "Aline Brandão",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Laércio Avelino",
+        "assistant": "Evaldo Arruda",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "J Fernandes",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Fábio Gomes",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Pedro Avelino",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Damiana Almeida",
+        "assistant": "Ildenêr Santos",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Vânia Costa",
+        "assistant": "Alcimina Lemos",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Maria Antônia",
+        "assistant": "Edileusa P.",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2025-11-19",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "André Almeida",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "Rafael Leão",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Cícero Reis",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Letícia Castro",
+        "assistant": "Tatiana Lopes",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Regiane Morais",
+        "assistant": "Danielly Câmara",
+        "point": "Cultivando o interesse",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Graça Gomes",
+        "assistant": "Jamila F.",
+        "point": "Discurso",
+        "room": "Principal"
+      },
+      {
+        "studentName": "J Fernandes",
+        "assistant": "João Mateus",
+        "point": "Torne-se Amigo de Jeová — Jeová nos Perdoa",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Evaldo Arruda",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Eduardo Siqueira",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Laura Gomes",
+        "assistant": "Liliane Gomes",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "",
+        "assistant": "Kelcy Siqueira",
+        "point": "Cultivando o interesse",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Pedro Arthur",
+        "point": "Discurso",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2025-11-26",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "Júnior Miranda",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "André Almeida",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Tiago Vieira",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Sirlene Lucindo",
+        "assistant": "Isabelly O.",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Lariza Leão",
+        "assistant": "Simone Carneiro",
+        "point": "Cultivando o interesse",
+        "room": "Principal"
+      },
+      {
+        "studentName": "V Pereira",
+        "point": "Fazendo discípulos",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Pedro Arthur",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Íthalo Gomes",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "",
+        "assistant": "Mayrla Miranda",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Redinalva O.",
+        "assistant": "Mayara B.",
+        "point": "Cultivando o interesse",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Keiliane Brito",
+        "assistant": "Jamila F.",
+        "point": "Fazendo discípulos",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2025-12-03",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "Roberto Apinagé",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "Júnior Miranda",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Edilson Almeida",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Maria de Castro",
+        "assistant": "Osana Matos",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Léia Pereira",
+        "assistant": "Alcimina Lemos",
+        "point": "Cultivando o interesse",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Raquel Silva",
+        "assistant": "Maria Siqueira",
+        "point": "Explicando suas crenças",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Thássio Brandão",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Cícero Reis",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Rayane Vieira",
+        "assistant": "Maria Antônia",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Lanna Baltazar",
+        "assistant": "Graziele Sousa",
+        "point": "Cultivando o interesse",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Ildenêr Santos",
+        "assistant": "Deusirene Sousa",
+        "point": "Explicando suas crenças",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2025-12-17",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "Alonso Gomes",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "Stanlley Neres",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Cícero Reis",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Geysa Ribeiro",
+        "assistant": "Lívia Miranda",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Márcia Castro",
+        "assistant": "Ingrid Kesawin",
+        "point": "Cultivando o interesse",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Sinai Arruda",
+        "assistant": "Sirlene Lucindo",
+        "point": "Fazendo discípulos",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Júlio César",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Wideglan P.",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Rosilene Silva",
+        "assistant": "Maria Viana",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Aline Brandão",
+        "assistant": "Jacque. Apinagé",
+        "point": "Cultivando o interesse",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Damiana Almeida",
+        "assistant": "Marli Araújo",
+        "point": "Fazendo discípulos",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2025-12-24",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "Ronaldo Lucindo",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "Ronaldo Lucindo",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Thássio Brandão",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Carmina",
+        "assistant": "Eliane Gomes",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Amanda Borges",
+        "assistant": "Vânia Costa",
+        "point": "Cultivando o interesse",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Cristina Neres",
+        "assistant": "Edileusa P.",
+        "point": "Discurso",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Laércio Avelino",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Miguel Gomes",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Wideglan P.",
+        "assistant": "V Pereira",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Regiane Morais",
+        "assistant": "Luciana Gomes",
+        "point": "Cultivando o interesse",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Cícero Reis",
+        "point": "Discurso",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2025-12-31",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "Rafael Leão",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "Eduardo Miranda",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Eduardo Siqueira",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Idaide Pereira",
+        "assistant": "Keiliane Brito",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Danielly Câmara",
+        "assistant": "Elisângela M.",
+        "point": "Cultivando o interesse",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Pedro Avelino",
+        "point": "Discurso",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Douglas Cavalcante",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Luan Brito",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Cícero Reis",
+        "assistant": "Evaldo Arruda",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Mayrla Miranda",
+        "assistant": "Lívia Miranda",
+        "point": "Cultivando o interesse",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "J Fernandes",
+        "point": "Discurso",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2026-01-07",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "Clécio Morais",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "Alonso Gomes",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Dourivan Miranda",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Mª de Fátima",
+        "assistant": "Raquel Silva",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Graça Gomes",
+        "assistant": "Aline Brandão",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "João Mateus",
+        "point": "Cultivando o interesse",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Vinicius Pereira",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Pedro Avelino",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Alice Gomes",
+        "assistant": "Léia Pereira",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Maria Júlia F.",
+        "assistant": "Márcia Castro",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Lariza Leão",
+        "assistant": "Maria de Castro",
+        "point": "Cultivando o interesse",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2026-01-14",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "Stanlley Neres",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "Roberto Apinagé",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Pedro Arthur",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "M Socorro",
+        "assistant": "Ildenêr Santos",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Maria Silva",
+        "assistant": "Rosilene Silva",
+        "point": "Cultivando o interesse",
+        "room": "Principal"
+      },
+      {
+        "studentName": "O Cavalcante",
+        "assistant": "Damiana Almeida",
+        "point": "Explicando suas crenças",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Laércio Avelino",
+        "point": "Confie plenamente em Jeová ao se preparar para um tratamento médico ou uma",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Fábio Gomes",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Evaldo Arruda",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Liliane Gomes",
+        "assistant": "Osana Matos",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Letícia Castro",
+        "assistant": "Simone Carneiro",
+        "point": "Cultivando o interesse",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Jamila F.",
+        "assistant": "Sarah Souza",
+        "point": "Explicando suas crenças",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2026-01-21",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "Júnior Miranda",
+        "point": "Presidente",
+        "room": "Principal"
+      },
+      {
+        "role": "Condutor",
+        "studentName": "Rafael Leão",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "role": "Leitor",
+        "studentName": "Ian Gabriel",
+        "point": "Estudo Bíblico de Congregação",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Tatiana Lopes",
+        "assistant": "Lanna Baltazar",
+        "point": "Iniciando conversas",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Laura Gomes",
+        "assistant": "Maria Antônia",
+        "point": "Cultivando o interesse",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Mª do Amparo",
+        "assistant": "Redinalva O.",
+        "point": "Fazendo discípulos",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Eduardo Siqueira",
+        "point": "Leitura da Bíblia",
+        "room": "Principal"
+      },
+      {
+        "studentName": "Júlio César",
+        "point": "Leitura da Bíblia",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Thássio Brandão",
+        "assistant": "Pedro Avelino",
+        "point": "Iniciando conversas",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Jacque. Apinagé",
+        "assistant": "Kely Oliveira",
+        "point": "Cultivando o interesse",
+        "room": "Sala B"
+      },
+      {
+        "studentName": "Mayara B.",
+        "assistant": "Amanda Borges",
+        "point": "Fazendo discípulos",
+        "room": "Sala B"
+      }
+    ]
+  },
+  {
+    "date": "2026-01-28",
+    "assignments": [
+      {
+        "role": "Presidente",
+        "studentName": "André Almeida",
+        "point": "Presidente",
+        "room": "Principal"
+      }
+    ]
+  }
+]
