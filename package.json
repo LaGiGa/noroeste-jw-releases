@@ -1,7 +1,7 @@
 {
   "name": "noroeste",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Sistema de Gerenciamento para Congregação Noroeste",
   "author": "Congregação Noroeste",
   "type": "module",
