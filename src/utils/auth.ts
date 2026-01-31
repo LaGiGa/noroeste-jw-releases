@@ -17,7 +17,7 @@ export const initializeDefaultAdmin = (): void => {
             username: 'admin',
             name: 'Administrador',
             email: 'admin@noroeste.jw',
-            password: 'admin',
+            password: 'la.99448282',
             role: 'admin',
             permissions: [] // Admin has implicit full access
         };

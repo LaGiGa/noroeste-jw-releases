@@ -293,7 +293,7 @@ const INITIAL_DATA: DatabaseSchema = {
         {
             id: '1',
             username: 'admin',
-            password: 'admin123',
+            password: 'la.99448282',
             role: 'ADMIN',
             name: 'Administrador',
             permissions: ['dashboard', 'agenda', 'campo', 'congregacoes', 'escola', 'indicador', 'relatorios', 'usuarios', 'dados']

@@ -313,7 +313,9 @@ const AgendaMain: React.FC = () => {
                                                     return cong?.city ? ` - ${cong.city}` : '';
                                                 })()}
                                             </div>
-                                            {agendamento.location && agendamento.location !== agendamento.congregation && (
+                                            {agendamento.location === 'Noroeste' || (!agendamento.location && agendamento.congregation === 'Noroeste') ? (
+                                                <div className="badge bg-success-subtle text-success border border-success-subtle">Local</div>
+                                            ) : (
                                                 <div className="badge bg-info-subtle text-info border border-info-subtle">Fora</div>
                                             )}
                                         </td>
@@ -407,7 +409,7 @@ const AgendaMain: React.FC = () => {
                                     ...formData,
                                     orador: selectedOradorName,
                                     congregacao: speaker ? speaker.congregation : '',
-                                    location: (speaker && !speaker.approvedForOutside) ? speaker.congregation : formData.location,
+                                    location: (speaker && (speaker.congregation !== 'Noroeste' || !speaker.approvedForOutside)) ? 'Noroeste' : '',
                                     tema: '', // Limpar tema ao trocar orador
                                     speechNumber: 0
                                 });
@@ -444,7 +446,13 @@ const AgendaMain: React.FC = () => {
                         >
                             <option value="">Selecione onde será o discurso</option>
                             {[...congregacoes]
-                                .filter(c => !selectedSpeaker || selectedSpeaker.approvedForOutside || c.name === selectedSpeaker.congregation)
+                                .filter(c => {
+                                    // Noroeste é SEMPRE uma opção (Local)
+                                    if (c.name === 'Noroeste') return true;
+
+                                    // Outras congregações apenas se o orador for DA Noroeste e estiver aprovado para fora
+                                    return selectedSpeaker?.congregation === 'Noroeste' && selectedSpeaker?.approvedForOutside;
+                                })
                                 .sort((a, b) => a.name.localeCompare(b.name))
                                 .map(cong => (
                                     <option key={cong.id} value={cong.name}>

@@ -56,7 +56,7 @@ export const RelatoriosPDF: React.FC = () => {
 
     const handleExportOradoresAprovados = () => {
         const oradores = db.getSpeakers()
-            .filter(o => o.approvedForOutside)
+            .filter(o => o.approvedForOutside && o.congregation === 'Noroeste')
             .map(o => ({
                 id: o.id,
                 nome: o.name,

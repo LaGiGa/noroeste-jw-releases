@@ -157,7 +157,7 @@ export const Oradores: React.FC = () => {
 
     const handleExportAprovadosPDF = () => {
         const aprovados = oradores
-            .filter(o => o.approvedForOutside)
+            .filter(o => o.approvedForOutside && o.congregation === 'Noroeste')
             .map(o => ({
                 id: o.id,
                 nome: o.name,
@@ -329,20 +329,22 @@ export const Oradores: React.FC = () => {
                         ))}
                     </select>
                 </div>
-                <div className="mb-3">
-                    <div className="form-check form-switch mt-2">
-                        <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="aprovadoFora"
-                            checked={formData.aprovadoFora}
-                            onChange={(e) => setFormData({ ...formData, aprovadoFora: e.target.checked })}
-                        />
-                        <label className="form-check-label" htmlFor="aprovadoFora">
-                            Aprovado para fazer discursos fora
-                        </label>
+                {formData.congregacao === 'Noroeste' && (
+                    <div className="mb-3">
+                        <div className="form-check form-switch mt-2">
+                            <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id="aprovadoFora"
+                                checked={formData.aprovadoFora}
+                                onChange={(e) => setFormData({ ...formData, aprovadoFora: e.target.checked })}
+                            />
+                            <label className="form-check-label" htmlFor="aprovadoFora">
+                                Aprovado para fazer discursos fora
+                            </label>
+                        </div>
                     </div>
-                </div>
+                )}
             </Modal>
 
             {/* Modal Ver Discursos */}
