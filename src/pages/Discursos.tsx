@@ -20,7 +20,7 @@ export const Discursos: React.FC = () => {
     const [showSpeechModal, setShowSpeechModal] = useState(false);
     const [editingSpeech, setEditingSpeech] = useState<Speech | null>(null);
     const [speechFormData, setSpeechFormData] = useState({
-        number: 0,
+        number: '' as string | number,
         theme: '',
         doNotUseUntil: ''
     });
@@ -79,16 +79,18 @@ export const Discursos: React.FC = () => {
 
     const historicoFiltrado = useMemo(() => {
         if (!selectedDiscurso) return [];
+        const selectedNumber = typeof selectedDiscurso.number === 'number' ? selectedDiscurso.number : selectedDiscurso.number;
         return historico
-            .filter(h => h.speechNumber === selectedDiscurso.number)
+            .filter(h => h.speechNumber === selectedNumber || h.speechNumber.toString() === selectedNumber.toString())
             .filter(h => filterCongregacao === 'todas' || h.congregation === filterCongregacao)
             .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     }, [selectedDiscurso, historico, filterCongregacao]);
 
     const oradoresQualificados = useMemo(() => {
         if (!selectedDiscurso) return [];
+        const selectedNumber = selectedDiscurso.number;
         return dbSpeakers
-            .filter(s => s.qualifiedSpeeches && s.qualifiedSpeeches.includes(selectedDiscurso.number))
+            .filter(s => s.qualifiedSpeeches && (s.qualifiedSpeeches.includes(selectedNumber as number) || s.qualifiedSpeeches.map(String).includes(String(selectedNumber))))
             .map(s => s.name)
             .sort();
     }, [selectedDiscurso, dbSpeakers]);
@@ -111,7 +113,7 @@ export const Discursos: React.FC = () => {
             });
         } else {
             setEditingSpeech(null);
-            const nextNumber = dbSpeeches.length > 0 ? Math.max(...dbSpeeches.map(d => d.number)) + 1 : 1;
+            const nextNumber = dbSpeeches.length > 0 ? Math.max(...dbSpeeches.map(d => typeof d.number === 'number' ? d.number : parseInt(String(d.number)) || 0)) + 1 : 1;
             setSpeechFormData({
                 number: nextNumber,
                 theme: '',
@@ -388,7 +390,8 @@ export const Discursos: React.FC = () => {
             >
                 <div className="mb-3">
                     <label className="form-label fw-bold">Número do Esboço</label>
-                    <input type="number" className="form-control" value={speechFormData.number} onChange={e => setSpeechFormData({ ...speechFormData, number: parseInt(e.target.value) })} />
+                    <input type="text" className="form-control" value={speechFormData.number} onChange={e => setSpeechFormData({ ...speechFormData, number: e.target.value })} placeholder="Ex: 198 ou 198A" />
+                    <small className="text-muted">Você pode usar números ou letras (ex: 198, 198A, 198B)</small>
                 </div>
                 <div className="mb-3">
                     <label className="form-label fw-bold">Tema do Discurso</label>

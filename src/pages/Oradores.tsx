@@ -1,27 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { FaPlus, FaEdit, FaTrash, FaEye, FaFilePdf, FaList, FaBuilding } from 'react-icons/fa';
+import { FaPlus, FaEdit, FaTrash, FaEye, FaFilePdf, FaList, FaBuilding, FaCalendarCheck } from 'react-icons/fa';
 import { Modal } from '../components/ui/Modal';
 import { ConfirmDialog } from '../components/ui/ConfirmDialog';
 import { exportOradoresPDF, exportOradoresAprovadosPDF } from '../services/pdfExport';
 import { showSuccess, showError } from '../utils/toast';
 import { DISCURSOS_COMPLETOS } from '../data/discursos';
 import { db } from '../services/database';
-import type { Speaker, Congregation } from '../services/database';
+import type { Speaker, Congregation, Speech } from '../services/database';
 
 export const Oradores: React.FC = () => {
     const [oradores, setOradores] = useState<Speaker[]>([]);
     const [congregacoes, setCongregacoes] = useState<Congregation[]>([]);
+    const [dbSpeeches, setDbSpeeches] = useState<Speech[]>([]);
 
     const [searchTerm, setSearchTerm] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [showDiscursosModal, setShowDiscursosModal] = useState(false);
     const [showEditDiscursosModal, setShowEditDiscursosModal] = useState(false);
+    const [showEditEventosModal, setShowEditEventosModal] = useState(false);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [editingOrador, setEditingOrador] = useState<Speaker | null>(null);
     const [viewingOrador, setViewingOrador] = useState<Speaker | null>(null);
     const [editingDiscursosOrador, setEditingDiscursosOrador] = useState<Speaker | null>(null);
+    const [editingEventosOrador, setEditingEventosOrador] = useState<Speaker | null>(null);
     const [deletingId, setDeletingId] = useState<string | null>(null);
     const [selectedDiscursos, setSelectedDiscursos] = useState<number[]>([]);
+    const [selectedEventos, setSelectedEventos] = useState<('ASSEMBLEIA' | 'CONGRESSO')[]>([]);
     const [formData, setFormData] = useState({
         nome: '',
         telefone: '',
@@ -35,8 +39,37 @@ export const Oradores: React.FC = () => {
         Promise.resolve().then(() => {
             setOradores(db.getSpeakers().sort((a, b) => a.name.localeCompare(b.name)));
             setCongregacoes(db.getCongregations());
+            setDbSpeeches(db.getSpeeches());
         });
     }, []);
+
+    // Combinar discursos padrão com discursos personalizados do banco
+    const allDiscursos = React.useMemo(() => {
+        // Converter discursos do banco para o formato esperado
+        const customSpeeches = dbSpeeches.map(speech => ({
+            numero: typeof speech.number === 'number' ? speech.number : speech.number,
+            tema: speech.theme
+        }));
+
+        // Criar um Map para evitar duplicatas (prioriza discursos do banco)
+        const discursosMap = new Map();
+
+        // Adicionar discursos padrão primeiro
+        DISCURSOS_COMPLETOS.forEach(d => {
+            discursosMap.set(d.numero.toString(), d);
+        });
+
+        // Sobrescrever/adicionar discursos personalizados
+        customSpeeches.forEach(d => {
+            discursosMap.set(d.numero.toString(), d);
+        });
+
+        return Array.from(discursosMap.values()).sort((a, b) => {
+            const numA = typeof a.numero === 'number' ? a.numero : parseInt(String(a.numero)) || 0;
+            const numB = typeof b.numero === 'number' ? b.numero : parseInt(String(b.numero)) || 0;
+            return numA - numB;
+        });
+    }, [dbSpeeches]);
 
     const getCongLabel = (name: string): string => {
         const c = congregacoes.find(x => x.name === name);
@@ -142,6 +175,33 @@ export const Oradores: React.FC = () => {
             setShowEditDiscursosModal(false);
             setEditingDiscursosOrador(null);
             setSelectedDiscursos([]);
+        }
+    };
+
+    const handleEditEventos = (orador: Speaker) => {
+        setEditingEventosOrador(orador);
+        setSelectedEventos([...(orador.qualifiedForSpecialEvents || [])]);
+        setShowEditEventosModal(true);
+    };
+
+    const handleToggleEvento = (tipo: 'ASSEMBLEIA' | 'CONGRESSO') => {
+        setSelectedEventos(prev =>
+            prev.includes(tipo)
+                ? prev.filter(t => t !== tipo)
+                : [...prev, tipo]
+        );
+    };
+
+    const handleSaveEventos = () => {
+        if (editingEventosOrador) {
+            db.updateSpeaker(editingEventosOrador.id, {
+                qualifiedForSpecialEvents: selectedEventos.length > 0 ? selectedEventos : undefined
+            });
+            setOradores(db.getSpeakers().sort((a, b) => a.name.localeCompare(b.name)));
+            showSuccess('Eventos especiais atualizados com sucesso!');
+            setShowEditEventosModal(false);
+            setEditingEventosOrador(null);
+            setSelectedEventos([]);
         }
     };
 
@@ -251,6 +311,13 @@ export const Oradores: React.FC = () => {
                                                 title="Editar discursos preparados"
                                             >
                                                 <FaList />
+                                            </button>
+                                            <button
+                                                className="btn btn-sm btn-outline-warning me-1"
+                                                onClick={() => handleEditEventos(orador)}
+                                                title="Editar eventos especiais"
+                                            >
+                                                <FaCalendarCheck />
                                             </button>
                                             <button
                                                 className="btn btn-sm btn-outline-primary me-1"
@@ -374,7 +441,7 @@ export const Oradores: React.FC = () => {
                         {viewingOrador.qualifiedSpeeches.length > 0 ? (
                             <ul className="list-group">
                                 {viewingOrador.qualifiedSpeeches.map(num => {
-                                    const tema = DISCURSOS_COMPLETOS.find(d => d.numero === num)?.tema || '';
+                                    const tema = allDiscursos.find(d => d.numero.toString() === num.toString())?.tema || '';
                                     return (
                                         <li key={num} className="list-group-item d-flex justify-content-between align-items-center">
                                             <span><strong>#{num}</strong> - {tema}</span>
@@ -413,7 +480,7 @@ export const Oradores: React.FC = () => {
                     </p>
                     <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
                         <div className="row">
-                            {DISCURSOS_COMPLETOS.map(discurso => (
+                            {allDiscursos.map(discurso => (
                                 <div key={discurso.numero} className="col-md-6 mb-2">
                                     <div className="form-check">
                                         <input
@@ -432,6 +499,71 @@ export const Oradores: React.FC = () => {
                         </div>
                     </div>
                 </div>
+            </Modal>
+
+            {/* Modal Editar Eventos Especiais */}
+            <Modal
+                isOpen={showEditEventosModal}
+                onClose={() => setShowEditEventosModal(false)}
+                title={`Eventos Especiais - ${editingEventosOrador?.name}`}
+                size="md"
+                footer={
+                    <>
+                        <button className="btn btn-secondary" onClick={() => setShowEditEventosModal(false)}>
+                            Cancelar
+                        </button>
+                        <button className="btn btn-primary" onClick={handleSaveEventos}>
+                            Salvar
+                        </button>
+                    </>
+                }
+            >
+                <div className="alert alert-info mb-3">
+                    <small>
+                        <FaCalendarCheck className="me-1" />
+                        Selecione os tipos de eventos especiais que este orador pode fazer.
+                        Apenas Assembleias e Congressos estão disponíveis.
+                    </small>
+                </div>
+
+                <div className="row">
+                    <div className="col-md-6 mb-3">
+                        <div className="form-check">
+                            <input
+                                type="checkbox"
+                                className="form-check-input"
+                                id="evento-assembleia"
+                                checked={selectedEventos.includes('ASSEMBLEIA')}
+                                onChange={() => handleToggleEvento('ASSEMBLEIA')}
+                            />
+                            <label className="form-check-label" htmlFor="evento-assembleia">
+                                <strong>Assembleia</strong>
+                                <div className="small text-muted">Pode fazer discursos em assembleias</div>
+                            </label>
+                        </div>
+                    </div>
+                    <div className="col-md-6 mb-3">
+                        <div className="form-check">
+                            <input
+                                type="checkbox"
+                                className="form-check-input"
+                                id="evento-congresso"
+                                checked={selectedEventos.includes('CONGRESSO')}
+                                onChange={() => handleToggleEvento('CONGRESSO')}
+                            />
+                            <label className="form-check-label" htmlFor="evento-congresso">
+                                <strong>Congresso</strong>
+                                <div className="small text-muted">Pode fazer discursos em congressos</div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                {selectedEventos.length === 0 && (
+                    <div className="alert alert-warning mb-0">
+                        <small>Nenhum evento especial selecionado. Este orador não aparecerá nas opções ao criar eventos especiais.</small>
+                    </div>
+                )}
             </Modal>
 
             {/* Confirm Delete */}

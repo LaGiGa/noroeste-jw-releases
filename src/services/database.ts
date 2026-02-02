@@ -19,11 +19,12 @@ export interface Speaker {
     congregation: string;
     qualifiedSpeeches: number[]; // IDs dos discursos
     approvedForOutside?: boolean; // Aprovado para fazer discursos fora
+    qualifiedForSpecialEvents?: ('ASSEMBLEIA' | 'CONGRESSO')[]; // Tipos de eventos especiais que pode fazer
 }
 
 export interface Speech {
     id: string;
-    number: number;
+    number: string | number; // Aceita tanto números quanto strings (ex: "198A")
     theme: string;
     doNotUseUntil?: string; // Data até quando o discurso não deve ser usado
 }
@@ -32,7 +33,7 @@ export interface ScheduleItem {
     id: string;
     date: string;
     time: string;
-    speechNumber: number;
+    speechNumber: string | number; // Aceita tanto números quanto strings (ex: "198A")
     speechTheme: string;
     speakerName: string;
     congregation: string; // Congregação de origem do orador
@@ -44,7 +45,7 @@ export interface ScheduleItem {
 export interface HistoryItem {
     id: string;
     date: string;
-    speechNumber: number;
+    speechNumber: string | number; // Aceita tanto números quanto strings (ex: "198A")
     speechTheme: string;
     speakerName: string;
     congregation: string;
@@ -266,6 +267,8 @@ export interface SpecialEvent {
     endDate: string;
     description: string;
     type: 'VISITA_SUPERINTENDENTE' | 'ASSEMBLEIA' | 'CONGRESSO' | 'CELEBRACAO' | 'OUTRO';
+    customTypeName?: string; // Nome personalizado para o tipo de evento
+    speakerName?: string; // Nome do orador/responsável (para Assembleias, Congressos, Visitas)
 }
 
 // Schema do Banco de Dados
@@ -1400,7 +1403,9 @@ class DatabaseService {
 
     // --- Special Events ---
     public getSpecialEvents(): SpecialEvent[] {
-        return this.data.specialEvents || [];
+        return (this.data.specialEvents || []).sort((a, b) =>
+            new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+        );
     }
 
     public addSpecialEvent(event: Omit<SpecialEvent, 'id'>): SpecialEvent {
@@ -1425,7 +1430,11 @@ class DatabaseService {
 
     // --- Speeches ---
     public getSpeeches(): Speech[] {
-        return (this.data.speeches || []).sort((a, b) => a.number - b.number);
+        return (this.data.speeches || []).sort((a, b) => {
+            const numA = typeof a.number === 'number' ? a.number : parseInt(String(a.number)) || 0;
+            const numB = typeof b.number === 'number' ? b.number : parseInt(String(b.number)) || 0;
+            return numA - numB;
+        });
     }
 
     public addSpeech(speech: Omit<Speech, 'id'>): Speech {

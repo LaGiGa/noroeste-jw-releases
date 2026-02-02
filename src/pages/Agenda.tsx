@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { FaPlus, FaEdit, FaTrash, FaFilePdf, FaCalendarAlt, FaHistory, FaBook, FaUsers } from 'react-icons/fa';
+import { FaPlus, FaEdit, FaTrash, FaFilePdf, FaCalendarAlt, FaHistory, FaBook, FaUsers, FaCalendarCheck } from 'react-icons/fa';
 import { Modal } from '../components/ui/Modal';
 import { ConfirmDialog } from '../components/ui/ConfirmDialog';
 import { exportAgendaPDF } from '../services/pdfExport';
@@ -7,14 +7,16 @@ import { showSuccess, showError } from '../utils/toast';
 import { Discursos } from './Discursos';
 import { Historico } from './Historico';
 import { Oradores } from './Oradores';
+import { EventosEspeciais } from './EventosEspeciais';
 import { db } from '../services/database';
-import type { ScheduleItem, Speaker, Congregation, Speech } from '../services/database';
+import type { ScheduleItem, Speaker, Congregation, Speech, SpecialEvent } from '../services/database';
 
 const AgendaMain: React.FC = () => {
     const [oradores, setOradores] = useState<Speaker[]>([]);
     const [agendamentos, setAgendamentos] = useState<ScheduleItem[]>([]);
     const [congregacoes, setCongregacoes] = useState<Congregation[]>([]);
     const [speeches, setSpeeches] = useState<Speech[]>([]);
+    const [specialEvents, setSpecialEvents] = useState<SpecialEvent[]>([]);
 
     const [showModal, setShowModal] = useState(false);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -37,7 +39,7 @@ const AgendaMain: React.FC = () => {
         congregacao: '', // Origem
         location: '',    // Destino
         host: '',
-        speechNumber: 0
+        speechNumber: 0 as string | number
     });
 
     // Carregar dados do banco
@@ -47,6 +49,7 @@ const AgendaMain: React.FC = () => {
             setAgendamentos(db.getSchedule());
             setCongregacoes(db.getCongregations());
             setSpeeches(db.getSpeeches());
+            setSpecialEvents(db.getSpecialEvents());
         });
     }, []);
 
@@ -88,6 +91,19 @@ const AgendaMain: React.FC = () => {
     const handleSave = () => {
         if (!formData.data) {
             showError('Data é obrigatória');
+            return;
+        }
+
+        // Verificar se a data está bloqueada por um evento especial
+        const selectedDate = new Date(formData.data + 'T00:00:00');
+        const blockedEvent = specialEvents.find(event => {
+            const startDate = new Date(event.startDate + 'T00:00:00');
+            const endDate = new Date(event.endDate + 'T00:00:00');
+            return selectedDate >= startDate && selectedDate <= endDate;
+        });
+
+        if (blockedEvent) {
+            showError(`Não é possível agendar nesta data. Evento: ${blockedEvent.description} (${new Date(blockedEvent.startDate + 'T00:00:00').toLocaleDateString('pt-BR')} a ${new Date(blockedEvent.endDate + 'T00:00:00').toLocaleDateString('pt-BR')})`);
             return;
         }
 
@@ -178,6 +194,41 @@ const AgendaMain: React.FC = () => {
         new Date(a.date).getTime() - new Date(b.date).getTime()
     );
 
+    // Combinar agendamentos e eventos especiais para exibição
+    const combinedItems = useMemo(() => {
+        const items: Array<{ type: 'agendamento' | 'evento', data: ScheduleItem | SpecialEvent, date: string }> = [];
+
+        // Adicionar agendamentos
+        sortedAgendamentos.forEach(ag => {
+            items.push({ type: 'agendamento', data: ag, date: ag.date });
+        });
+
+        // Adicionar eventos especiais (filtrados se houver filtro de data)
+        specialEvents.forEach(ev => {
+            const eventStart = new Date(ev.startDate);
+            const eventEnd = new Date(ev.endDate);
+
+            // Aplicar filtros de data se existirem
+            let shouldInclude = true;
+            if (filters.startDate) {
+                const filterStart = new Date(filters.startDate);
+                if (eventEnd < filterStart) shouldInclude = false;
+            }
+            if (filters.endDate) {
+                const filterEnd = new Date(filters.endDate);
+                if (eventStart > filterEnd) shouldInclude = false;
+            }
+
+            if (shouldInclude) {
+                items.push({ type: 'evento', data: ev, date: ev.startDate });
+            }
+        });
+
+        // Ordenar por data
+        return items.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    }, [sortedAgendamentos, specialEvents, filters.startDate, filters.endDate]);
+
+
     // Encontrar orador selecionado para obter discursos e telefone
     const selectedSpeaker = oradores.find(s => s.name === formData.orador);
 
@@ -186,8 +237,9 @@ const AgendaMain: React.FC = () => {
         if (!selectedSpeaker) return [];
 
         return speeches.filter(d => {
-            // Verifica se o orador tem esse discurso
-            const matchesSpeaker = selectedSpeaker.qualifiedSpeeches.includes(d.number);
+            // Verifica se o orador tem esse discurso (comparando como string e number)
+            const matchesSpeaker = selectedSpeaker.qualifiedSpeeches.includes(d.number as number) ||
+                selectedSpeaker.qualifiedSpeeches.map(String).includes(String(d.number));
 
             // Verifica regra de "Não usar até"
             let isRestricted = false;
@@ -292,50 +344,103 @@ const AgendaMain: React.FC = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {sortedAgendamentos.map((agendamento) => (
-                                    <tr key={agendamento.id}>
-                                        <td className="ps-3 fw-bold">{new Date(agendamento.date + 'T00:00:00').toLocaleDateString('pt-BR')}</td>
-                                        <td>{agendamento.time}</td>
-                                        <td>
-                                            <div className="fw-bold text-primary">#{agendamento.speechNumber}</div>
-                                            <div className="small text-wrap" style={{ maxWidth: '200px' }}>{agendamento.speechTheme}</div>
-                                        </td>
-                                        <td>
-                                            <div className="fw-bold">{agendamento.speakerName}</div>
-                                            <div className="small text-muted">{agendamento.congregation}</div>
-                                        </td>
-                                        <td>
-                                            <div className="fw-bold">
-                                                {agendamento.location || agendamento.congregation}
-                                                {(() => {
-                                                    const name = agendamento.location || agendamento.congregation;
-                                                    const cong = congregacoes.find(c => c.name === name);
-                                                    return cong?.city ? ` - ${cong.city}` : '';
-                                                })()}
-                                            </div>
-                                            {agendamento.location === 'Noroeste' || (!agendamento.location && agendamento.congregation === 'Noroeste') ? (
-                                                <div className="badge bg-success-subtle text-success border border-success-subtle">Local</div>
-                                            ) : (
-                                                <div className="badge bg-info-subtle text-info border border-info-subtle">Fora</div>
-                                            )}
-                                        </td>
-                                        <td>{agendamento.host || '-'}</td>
-                                        <td className="text-end pe-3">
-                                            <button
-                                                className="btn btn-sm btn-outline-primary me-1 border-0"
-                                                onClick={() => handleOpenModal(agendamento)}
-                                            >
-                                                <FaEdit />
-                                            </button>
-                                            <button
-                                                className="btn btn-sm btn-outline-danger border-0"
-                                                onClick={() => handleDelete(agendamento.id)}
-                                            >
-                                                <FaTrash />
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
+                                {combinedItems.map((item) => {
+                                    if (item.type === 'evento') {
+                                        const evento = item.data as SpecialEvent;
+                                        const isSameDay = evento.startDate === evento.endDate;
+                                        const getEventTypeLabel = (type: SpecialEvent['type']): string => {
+                                            const labels: Record<SpecialEvent['type'], string> = {
+                                                VISITA_SUPERINTENDENTE: 'Visita do Superintendente',
+                                                ASSEMBLEIA: 'Assembleia',
+                                                CONGRESSO: 'Congresso',
+                                                CELEBRACAO: 'Celebração',
+                                                OUTRO: 'Outro'
+                                            };
+                                            return labels[type];
+                                        };
+                                        const getEventTypeBadgeClass = (type: SpecialEvent['type']): string => {
+                                            const classes: Record<SpecialEvent['type'], string> = {
+                                                VISITA_SUPERINTENDENTE: 'bg-primary',
+                                                ASSEMBLEIA: 'bg-success',
+                                                CONGRESSO: 'bg-info',
+                                                CELEBRACAO: 'bg-warning',
+                                                OUTRO: 'bg-secondary'
+                                            };
+                                            return classes[type];
+                                        };
+
+                                        return (
+                                            <tr key={`evento-${evento.id}`} className="table-warning bg-opacity-10">
+                                                <td className="ps-3 fw-bold">
+                                                    {new Date(evento.startDate + 'T00:00:00').toLocaleDateString('pt-BR')}
+                                                    {!isSameDay && (
+                                                        <div className="small text-muted">
+                                                            até {new Date(evento.endDate + 'T00:00:00').toLocaleDateString('pt-BR')}
+                                                        </div>
+                                                    )}
+                                                </td>
+                                                <td colSpan={2}>
+                                                    <span className={`badge ${getEventTypeBadgeClass(evento.type)} me-2`}>
+                                                        {evento.customTypeName || getEventTypeLabel(evento.type)}
+                                                    </span>
+                                                    <span className="fw-bold">{evento.description}</span>
+                                                </td>
+                                                <td>
+                                                    {evento.speakerName || <span className="text-muted">-</span>}
+                                                </td>
+                                                <td colSpan={3} className="text-muted fst-italic">
+                                                    Evento Especial - Sem agendamentos neste período
+                                                </td>
+                                            </tr>
+                                        );
+                                    } else {
+                                        const agendamento = item.data as ScheduleItem;
+                                        return (
+                                            <tr key={agendamento.id}>
+                                                <td className="ps-3 fw-bold">{new Date(agendamento.date + 'T00:00:00').toLocaleDateString('pt-BR')}</td>
+                                                <td>{agendamento.time}</td>
+                                                <td>
+                                                    <div className="fw-bold text-primary">#{agendamento.speechNumber}</div>
+                                                    <div className="small text-wrap" style={{ maxWidth: '200px' }}>{agendamento.speechTheme}</div>
+                                                </td>
+                                                <td>
+                                                    <div className="fw-bold">{agendamento.speakerName}</div>
+                                                    <div className="small text-muted">{agendamento.congregation}</div>
+                                                </td>
+                                                <td>
+                                                    <div className="fw-bold">
+                                                        {agendamento.location || agendamento.congregation}
+                                                        {(() => {
+                                                            const name = agendamento.location || agendamento.congregation;
+                                                            const cong = congregacoes.find(c => c.name === name);
+                                                            return cong?.city ? ` - ${cong.city}` : '';
+                                                        })()}
+                                                    </div>
+                                                    {agendamento.location === 'Noroeste' || (!agendamento.location && agendamento.congregation === 'Noroeste') ? (
+                                                        <div className="badge bg-success-subtle text-success border border-success-subtle">Local</div>
+                                                    ) : (
+                                                        <div className="badge bg-info-subtle text-info border border-info-subtle">Fora</div>
+                                                    )}
+                                                </td>
+                                                <td>{agendamento.host || '-'}</td>
+                                                <td className="text-end pe-3">
+                                                    <button
+                                                        className="btn btn-sm btn-outline-primary me-1 border-0"
+                                                        onClick={() => handleOpenModal(agendamento)}
+                                                    >
+                                                        <FaEdit />
+                                                    </button>
+                                                    <button
+                                                        className="btn btn-sm btn-outline-danger border-0"
+                                                        onClick={() => handleDelete(agendamento.id)}
+                                                    >
+                                                        <FaTrash />
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        );
+                                    }
+                                })}
                             </tbody>
                         </table>
                     </div>
@@ -374,6 +479,22 @@ const AgendaMain: React.FC = () => {
                             value={formData.data}
                             onChange={(e) => setFormData({ ...formData, data: e.target.value })}
                         />
+                        {formData.data && (() => {
+                            const selectedDate = new Date(formData.data + 'T00:00:00');
+                            const blockedEvent = specialEvents.find(event => {
+                                const startDate = new Date(event.startDate + 'T00:00:00');
+                                const endDate = new Date(event.endDate + 'T00:00:00');
+                                return selectedDate >= startDate && selectedDate <= endDate;
+                            });
+                            if (blockedEvent) {
+                                return (
+                                    <small className="text-danger d-block mt-1">
+                                        ⚠️ Data bloqueada: {blockedEvent.description}
+                                    </small>
+                                );
+                            }
+                            return null;
+                        })()}
                     </div>
                     <div className="col-md-4 mb-3">
                         <label className="form-label fw-bold">Horário Reunião *</label>
@@ -533,6 +654,15 @@ export const Agenda: React.FC = () => {
                 </li>
                 <li className="nav-item">
                     <button
+                        className={`nav-link ${activeTab === 'eventos' ? 'active' : ''}`}
+                        onClick={() => setActiveTab('eventos')}
+                    >
+                        <FaCalendarCheck className="me-2" />
+                        Eventos Especiais
+                    </button>
+                </li>
+                <li className="nav-item">
+                    <button
                         className={`nav-link ${activeTab === 'oradores' ? 'active' : ''}`}
                         onClick={() => setActiveTab('oradores')}
                     >
@@ -562,6 +692,7 @@ export const Agenda: React.FC = () => {
 
             <div className="tab-content">
                 {activeTab === 'agenda' && <AgendaMain />}
+                {activeTab === 'eventos' && <EventosEspeciais />}
                 {activeTab === 'oradores' && <Oradores />}
                 {activeTab === 'discursos' && <Discursos />}
                 {activeTab === 'historico' && <Historico />}
