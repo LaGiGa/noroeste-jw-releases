@@ -16,7 +16,10 @@ export const Congregacoes: React.FC = () => {
     const [formData, setFormData] = useState({
         nome: '',
         horario: '',
-        cidade: ''
+        cidade: '',
+        publicTalkCoordinatorName: '',
+        publicTalkCoordinatorPhone: '',
+        coordinatorName: ''
     });
 
     // Carregar congregações do banco
@@ -30,11 +33,21 @@ export const Congregacoes: React.FC = () => {
             setFormData({
                 nome: congregacao.name,
                 horario: congregacao.meetingTime || '',
-                cidade: congregacao.city || congregacao.address || '' // Fallback para address se city não existir
+                cidade: congregacao.city || congregacao.address || '',
+                publicTalkCoordinatorName: congregacao.publicTalkCoordinator?.name || '',
+                publicTalkCoordinatorPhone: congregacao.publicTalkCoordinator?.phone || '',
+                coordinatorName: congregacao.coordinatorName || ''
             });
         } else {
             setEditingCongregacao(null);
-            setFormData({ nome: '', horario: '', cidade: '' });
+            setFormData({
+                nome: '',
+                horario: '',
+                cidade: '',
+                publicTalkCoordinatorName: '',
+                publicTalkCoordinatorPhone: '',
+                coordinatorName: ''
+            });
         }
         setShowModal(true);
     };
@@ -42,7 +55,14 @@ export const Congregacoes: React.FC = () => {
     const handleCloseModal = () => {
         setShowModal(false);
         setEditingCongregacao(null);
-        setFormData({ nome: '', horario: '', cidade: '' });
+        setFormData({
+            nome: '',
+            horario: '',
+            cidade: '',
+            publicTalkCoordinatorName: '',
+            publicTalkCoordinatorPhone: '',
+            coordinatorName: ''
+        });
     };
 
     const handleSave = () => {
@@ -51,21 +71,23 @@ export const Congregacoes: React.FC = () => {
             return;
         }
 
+        const congData = {
+            name: formData.nome,
+            meetingTime: formData.horario,
+            city: formData.cidade,
+            address: formData.cidade,
+            publicTalkCoordinator: {
+                name: formData.publicTalkCoordinatorName,
+                phone: formData.publicTalkCoordinatorPhone
+            },
+            coordinatorName: formData.coordinatorName
+        };
+
         if (editingCongregacao) {
-            db.updateCongregation(editingCongregacao.id, {
-                name: formData.nome,
-                meetingTime: formData.horario,
-                city: formData.cidade,
-                address: formData.cidade // Mantendo address sincronizado com cidade por enquanto
-            });
+            db.updateCongregation(editingCongregacao.id, congData);
             showSuccess('Congregação atualizada com sucesso!');
         } else {
-            db.addCongregation({
-                name: formData.nome,
-                meetingTime: formData.horario,
-                city: formData.cidade,
-                address: formData.cidade
-            });
+            db.addCongregation(congData);
             showSuccess('Congregação criada com sucesso!');
         }
 
@@ -200,13 +222,50 @@ export const Congregacoes: React.FC = () => {
                     />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Cidade *</label>
+                    <label className="form-label fw-bold">Cidade *</label>
                     <input
                         type="text"
                         className="form-control"
                         value={formData.cidade}
                         onChange={(e) => setFormData({ ...formData, cidade: e.target.value })}
                         placeholder="Nome da cidade"
+                    />
+                </div>
+
+                <hr />
+                <h6 className="mb-3 text-primary">Coordenação</h6>
+
+                <div className="row">
+                    <div className="col-md-8 mb-3">
+                        <label className="form-label fw-bold small">Coordenador de Discursos Públicos</label>
+                        <input
+                            type="text"
+                            className="form-control form-control-sm"
+                            value={formData.publicTalkCoordinatorName}
+                            onChange={(e) => setFormData({ ...formData, publicTalkCoordinatorName: e.target.value })}
+                            placeholder="Nome do coordenador"
+                        />
+                    </div>
+                    <div className="col-md-4 mb-3">
+                        <label className="form-label fw-bold small">Telefone</label>
+                        <input
+                            type="text"
+                            className="form-control form-control-sm"
+                            value={formData.publicTalkCoordinatorPhone}
+                            onChange={(e) => setFormData({ ...formData, publicTalkCoordinatorPhone: e.target.value })}
+                            placeholder="(00) 00000-0000"
+                        />
+                    </div>
+                </div>
+
+                <div className="mb-3">
+                    <label className="form-label fw-bold small">Coordenador da Congregação</label>
+                    <input
+                        type="text"
+                        className="form-control form-control-sm"
+                        value={formData.coordinatorName}
+                        onChange={(e) => setFormData({ ...formData, coordinatorName: e.target.value })}
+                        placeholder="Nome do coordenador principal"
                     />
                 </div>
             </Modal>

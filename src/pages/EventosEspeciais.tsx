@@ -20,7 +20,10 @@ export const EventosEspeciais: React.FC = () => {
         description: '',
         type: 'OUTRO' as SpecialEvent['type'],
         customTypeName: '',
-        speakerName: ''
+        speakerName: '',
+        hostName: '',
+        location: '',
+        time: ''
     });
 
     // Carregar dados do banco
@@ -42,7 +45,10 @@ export const EventosEspeciais: React.FC = () => {
                 description: evento.description,
                 type: evento.type,
                 customTypeName: evento.customTypeName || '',
-                speakerName: evento.speakerName || ''
+                speakerName: evento.speakerName || '',
+                hostName: evento.hostName || '',
+                location: evento.location || '',
+                time: evento.time || ''
             });
         } else {
             setEditingEvento(null);
@@ -52,7 +58,10 @@ export const EventosEspeciais: React.FC = () => {
                 description: '',
                 type: 'OUTRO',
                 customTypeName: '',
-                speakerName: ''
+                speakerName: '',
+                hostName: '',
+                location: '',
+                time: ''
             });
         }
         setShowModal(true);
@@ -61,7 +70,17 @@ export const EventosEspeciais: React.FC = () => {
     const handleCloseModal = () => {
         setShowModal(false);
         setEditingEvento(null);
-        setFormData({ startDate: '', endDate: '', description: '', type: 'OUTRO', customTypeName: '', speakerName: '' });
+        setFormData({
+            startDate: '',
+            endDate: '',
+            description: '',
+            type: 'OUTRO',
+            customTypeName: '',
+            speakerName: '',
+            hostName: '',
+            location: '',
+            time: ''
+        });
     };
 
     const handleSave = () => {
@@ -92,7 +111,10 @@ export const EventosEspeciais: React.FC = () => {
             description: formData.description,
             type: formData.type,
             customTypeName: formData.customTypeName.trim() || undefined,
-            speakerName: formData.speakerName.trim() || undefined
+            speakerName: formData.speakerName.trim() || undefined,
+            hostName: formData.hostName.trim() || undefined,
+            location: formData.location.trim() || undefined,
+            time: formData.time.trim() || undefined
         };
 
         if (editingEvento) {
@@ -128,6 +150,7 @@ export const EventosEspeciais: React.FC = () => {
             ASSEMBLEIA: 'Assembleia',
             CONGRESSO: 'Congresso',
             CELEBRACAO: 'Celebração',
+            DISCURSO_ESPECIAL: 'Discurso Especial',
             OUTRO: 'Outro'
         };
         return labels[type];
@@ -139,6 +162,7 @@ export const EventosEspeciais: React.FC = () => {
             ASSEMBLEIA: 'bg-success',
             CONGRESSO: 'bg-info',
             CELEBRACAO: 'bg-warning',
+            DISCURSO_ESPECIAL: 'bg-danger',
             OUTRO: 'bg-secondary'
         };
         return classes[type];
@@ -258,6 +282,7 @@ export const EventosEspeciais: React.FC = () => {
                         <option value="ASSEMBLEIA">Assembleia</option>
                         <option value="CONGRESSO">Congresso</option>
                         <option value="CELEBRACAO">Celebração</option>
+                        <option value="DISCURSO_ESPECIAL">Discurso Especial</option>
                         <option value="OUTRO">Outro</option>
                     </select>
                 </div>
@@ -287,11 +312,11 @@ export const EventosEspeciais: React.FC = () => {
                     />
                 </div>
 
-                {(formData.type === 'ASSEMBLEIA' || formData.type === 'CONGRESSO' || formData.type === 'VISITA_SUPERINTENDENTE') && (
+                {(formData.type === 'ASSEMBLEIA' || formData.type === 'CONGRESSO' || formData.type === 'VISITA_SUPERINTENDENTE' || formData.type === 'CELEBRACAO' || formData.type === 'DISCURSO_ESPECIAL') && (
                     <div className="mb-3">
                         <label className="form-label fw-bold">
                             {formData.type === 'VISITA_SUPERINTENDENTE' ? 'Superintendente' : 'Orador Principal'}
-                            {formData.type !== 'VISITA_SUPERINTENDENTE' && ' (Opcional)'}
+                            {' (Opcional)'}
                         </label>
                         <select
                             className="form-select"
@@ -305,12 +330,13 @@ export const EventosEspeciais: React.FC = () => {
                             </option>
                             {speakers
                                 .filter(s => {
-                                    // Para Assembleia e Congresso, filtrar oradores qualificados
-                                    if (formData.type === 'ASSEMBLEIA' || formData.type === 'CONGRESSO') {
-                                        return s.qualifiedForSpecialEvents?.includes(formData.type);
+                                    if (formData.type === 'CELEBRACAO') {
+                                        return s.specialAssignments?.includes('CELEBRACAO');
                                     }
-                                    // Para Visita do Superintendente, mostrar todos
-                                    return true;
+                                    if (formData.type === 'DISCURSO_ESPECIAL') {
+                                        return s.specialAssignments?.includes('DISCURSO_ESPECIAL');
+                                    }
+                                    return true; // Para outros tipos, mostrar lista completa por enquanto
                                 })
                                 .map(speaker => (
                                     <option key={speaker.id} value={speaker.name}>
@@ -318,14 +344,59 @@ export const EventosEspeciais: React.FC = () => {
                                     </option>
                                 ))}
                         </select>
-                        {(formData.type === 'ASSEMBLEIA' || formData.type === 'CONGRESSO') && (
+                        {(formData.type === 'CELEBRACAO' || formData.type === 'DISCURSO_ESPECIAL') && (
                             <small className="text-muted d-block mt-1">
-                                Apenas oradores qualificados para {formData.type === 'ASSEMBLEIA' ? 'Assembleias' : 'Congressos'} aparecem na lista.
-                                Configure isso na aba "Oradores".
+                                Apenas oradores com a atribuição "{getEventTypeLabel(formData.type)}" configurada aparecem aqui.
                             </small>
                         )}
                     </div>
                 )}
+
+                {(formData.type === 'CELEBRACAO' || formData.type === 'DISCURSO_ESPECIAL') && (
+                    <div className="mb-3">
+                        <label className="form-label fw-bold">Anfitrião (Opcional)</label>
+                        <select
+                            className="form-select"
+                            value={formData.hostName}
+                            onChange={(e) => setFormData({ ...formData, hostName: e.target.value })}
+                        >
+                            <option value="">Selecione um anfitrião</option>
+                            {speakers
+                                .filter(s => s.specialAssignments?.includes('ANFITRIAO'))
+                                .map(s => (
+                                    <option key={s.id} value={s.name}>
+                                        {s.name} ({s.congregation})
+                                    </option>
+                                ))}
+                        </select>
+                        <small className="text-muted d-block mt-1">
+                            Apenas oradores com a atribuição "Anfitrião" configurada aparecem aqui.
+                        </small>
+                    </div>
+                )}
+
+                <div className="row">
+                    <div className="col-md-8 mb-3">
+                        <label className="form-label fw-bold">Local (Opcional)</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={formData.location}
+                            onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                            placeholder="Ex: Salão do Reino / Local Externo"
+                        />
+                    </div>
+                    <div className="col-md-4 mb-3">
+                        <label className="form-label fw-bold">Horário (Opcional)</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={formData.time}
+                            onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+                            placeholder="Ex: 19:30"
+                        />
+                    </div>
+                </div>
 
                 <div className="row">
                     <div className="col-md-6 mb-3">

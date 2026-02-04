@@ -19,7 +19,9 @@ export interface Speaker {
     congregation: string;
     qualifiedSpeeches: number[]; // IDs dos discursos
     approvedForOutside?: boolean; // Aprovado para fazer discursos fora
-    qualifiedForSpecialEvents?: ('ASSEMBLEIA' | 'CONGRESSO')[]; // Tipos de eventos especiais que pode fazer
+    specialAssignments?: ('ANFITRIAO' | 'CELEBRACAO' | 'DISCURSO_ESPECIAL' | 'OUTROS' | 'ASSEMBLEIA' | 'CONGRESSO')[]; // Atribuições para eventos especiais
+    privilege?: 'A' | 'SM'; // A = Ancião, SM = Servo Ministerial
+    unavailablePeriods?: { startDate: string, endDate: string, reason?: string }[];
 }
 
 export interface Speech {
@@ -40,6 +42,7 @@ export interface ScheduleItem {
     location?: string;    // Local do discurso (onde será realizado)
     meetingTime?: string; // Horário da reunião (se for fora)
     host?: string;        // Anfitrião
+    confirmed?: boolean;  // Discurso confirmado
 }
 
 export interface HistoryItem {
@@ -57,6 +60,8 @@ export interface Congregation {
     address?: string;
     meetingTime?: string; // Horário da reunião
     city?: string;
+    publicTalkCoordinator?: { name: string, phone: string };
+    coordinatorName?: string;
 }
 
 
@@ -266,9 +271,12 @@ export interface SpecialEvent {
     startDate: string;
     endDate: string;
     description: string;
-    type: 'VISITA_SUPERINTENDENTE' | 'ASSEMBLEIA' | 'CONGRESSO' | 'CELEBRACAO' | 'OUTRO';
+    type: 'VISITA_SUPERINTENDENTE' | 'ASSEMBLEIA' | 'CONGRESSO' | 'CELEBRACAO' | 'DISCURSO_ESPECIAL' | 'OUTRO';
     customTypeName?: string; // Nome personalizado para o tipo de evento
-    speakerName?: string; // Nome do orador/responsável (para Assembleias, Congressos, Visitas)
+    speakerName?: string; // Nome do orador/responsável
+    hostName?: string;    // Nome do anfitrião
+    location?: string;    // Local (string opcional)
+    time?: string;        // Horário (string opcional)
 }
 
 // Schema do Banco de Dados
@@ -633,6 +641,15 @@ class DatabaseService {
                         console.error('Erro ao migrar oradores legados:', e);
                     }
                 }
+
+                // MIGRAÇÃO DE ATRIBUIÇÕES (qualifiedForSpecialEvents -> specialAssignments)
+                speakers = speakers.map((s: any) => {
+                    if (s.qualifiedForSpecialEvents && !s.specialAssignments) {
+                        s.specialAssignments = s.qualifiedForSpecialEvents;
+                        delete s.qualifiedForSpecialEvents;
+                    }
+                    return s;
+                });
 
 
 

@@ -39,7 +39,8 @@ const AgendaMain: React.FC = () => {
         congregacao: '', // Origem
         location: '',    // Destino
         host: '',
-        speechNumber: 0 as string | number
+        speechNumber: 0 as string | number,
+        confirmed: false
     });
 
     // Carregar dados do banco
@@ -64,7 +65,8 @@ const AgendaMain: React.FC = () => {
                 congregacao: agendamento.congregation,
                 location: agendamento.location || '',
                 host: agendamento.host || '',
-                speechNumber: agendamento.speechNumber
+                speechNumber: agendamento.speechNumber,
+                confirmed: !!agendamento.confirmed
             });
         } else {
             setEditingAgendamento(null);
@@ -76,7 +78,8 @@ const AgendaMain: React.FC = () => {
                 congregacao: '',
                 location: '',
                 host: '',
-                speechNumber: 0
+                speechNumber: 0,
+                confirmed: false
             });
         }
         setShowModal(true);
@@ -85,7 +88,7 @@ const AgendaMain: React.FC = () => {
     const handleCloseModal = () => {
         setShowModal(false);
         setEditingAgendamento(null);
-        setFormData({ data: '', horario: '09:30', tema: '', orador: '', congregacao: '', location: '', host: '', speechNumber: 0 });
+        setFormData({ data: '', horario: '09:30', tema: '', orador: '', congregacao: '', location: '', host: '', speechNumber: 0, confirmed: false });
     };
 
     const handleSave = () => {
@@ -126,7 +129,8 @@ const AgendaMain: React.FC = () => {
             congregation: formData.congregacao,
             location: formData.location || undefined,
             host: formData.host || undefined,
-            meetingTime: formData.horario // Salvando o horário da reunião da cong. de destino
+            meetingTime: formData.horario, // Salvando o horário da reunião da cong. de destino
+            confirmed: formData.confirmed
         };
 
         if (editingAgendamento) {
@@ -165,21 +169,46 @@ const AgendaMain: React.FC = () => {
     });
 
     const handleExportPDF = () => {
-        const dataForPdf = filteredAgendamentos.map(a => {
-            const getCongCity = (name: string) => {
-                const cong = congregacoes.find(c => c.name === name);
-                return cong?.city ? ` - ${cong.city}` : '';
-            };
+        const getCongCity = (name: string) => {
+            const cong = congregacoes.find(c => c.name === name);
+            return cong?.city ? ` - ${cong.city}` : '';
+        };
 
-            return {
-                data: a.date,
-                horario: a.time,
-                tema: a.speechTheme,
-                orador: a.speakerName,
-                congregacao: a.congregation + getCongCity(a.congregation),
-                local: (a.location || a.congregation) + getCongCity(a.location || a.congregation),
-                anfitrao: a.host
-            };
+        const dataForPdf = combinedItems.map(item => {
+            if (item.type === 'agendamento') {
+                const a = item.data as ScheduleItem;
+                return {
+                    data: a.date,
+                    horario: a.time,
+                    tema: a.speechTheme,
+                    orador: a.speakerName,
+                    congregacao: a.congregation + getCongCity(a.congregation),
+                    local: (a.location || a.congregation) + getCongCity(a.location || a.congregation),
+                    anfitrao: a.host
+                };
+            } else {
+                const e = item.data as SpecialEvent;
+                const getEventLabel = (type: string) => {
+                    switch (type) {
+                        case 'VISITA_SUPERINTENDENTE': return 'Visita do Super.';
+                        case 'ASSEMBLEIA': return 'Assembleia';
+                        case 'CONGRESSO': return 'Congresso';
+                        case 'CELEBRACAO': return 'Celebração';
+                        case 'DISCURSO_ESPECIAL': return 'Discurso Especial';
+                        default: return e.customTypeName || 'Evento Especial';
+                    }
+                };
+
+                return {
+                    data: e.startDate,
+                    horario: e.time || '-',
+                    tema: `${getEventLabel(e.type)}${e.description ? `: ${e.description}` : ''}`,
+                    orador: e.speakerName || '-',
+                    congregacao: 'Noroeste', // Eventos especiais são geralmente locais
+                    local: e.location || 'Local',
+                    anfitrao: e.hostName || '-'
+                };
+            }
         });
 
         const periodLabel = filters.startDate && filters.endDate
@@ -354,6 +383,7 @@ const AgendaMain: React.FC = () => {
                                                 ASSEMBLEIA: 'Assembleia',
                                                 CONGRESSO: 'Congresso',
                                                 CELEBRACAO: 'Celebração',
+                                                DISCURSO_ESPECIAL: 'Discurso Especial',
                                                 OUTRO: 'Outro'
                                             };
                                             return labels[type];
@@ -364,6 +394,7 @@ const AgendaMain: React.FC = () => {
                                                 ASSEMBLEIA: 'bg-success',
                                                 CONGRESSO: 'bg-info',
                                                 CELEBRACAO: 'bg-warning',
+                                                DISCURSO_ESPECIAL: 'bg-danger',
                                                 OUTRO: 'bg-secondary'
                                             };
                                             return classes[type];
@@ -388,8 +419,14 @@ const AgendaMain: React.FC = () => {
                                                 <td>
                                                     {evento.speakerName || <span className="text-muted">-</span>}
                                                 </td>
-                                                <td colSpan={3} className="text-muted fst-italic">
-                                                    Evento Especial - Sem agendamentos neste período
+                                                <td colSpan={2} className="text-muted fst-italic">
+                                                    <div>
+                                                        {evento.location || 'Evento Especial'}
+                                                        {evento.time ? ` - ${evento.time}` : ''}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    {evento.hostName || '-'}
                                                 </td>
                                             </tr>
                                         );
@@ -405,24 +442,54 @@ const AgendaMain: React.FC = () => {
                                                 </td>
                                                 <td>
                                                     <div className="fw-bold">{agendamento.speakerName}</div>
-                                                    <div className="small text-muted">{agendamento.congregation}</div>
+                                                    <div className="small text-muted">
+                                                        {(() => {
+                                                            const cong = congregacoes.find(c => c.name === agendamento.congregation);
+                                                            return cong?.city ? `${agendamento.congregation} - ${cong.city}` : agendamento.congregation;
+                                                        })()}
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <div className="fw-bold">
-                                                        {agendamento.location || agendamento.congregation}
                                                         {(() => {
                                                             const name = agendamento.location || agendamento.congregation;
                                                             const cong = congregacoes.find(c => c.name === name);
-                                                            return cong?.city ? ` - ${cong.city}` : '';
+                                                            return cong?.city ? `${name} - ${cong.city}` : name;
                                                         })()}
                                                     </div>
-                                                    {agendamento.location === 'Noroeste' || (!agendamento.location && agendamento.congregation === 'Noroeste') ? (
-                                                        <div className="badge bg-success-subtle text-success border border-success-subtle">Local</div>
-                                                    ) : (
-                                                        <div className="badge bg-info-subtle text-info border border-info-subtle">Fora</div>
-                                                    )}
+                                                    {(() => {
+                                                        const name = agendamento.location || agendamento.congregation;
+                                                        const isLocal = name === 'Noroeste';
+                                                        const cong = congregacoes.find(c => c.name === name);
+
+                                                        return (
+                                                            <>
+                                                                {isLocal ? (
+                                                                    <div className="badge bg-success-subtle text-success border border-success-subtle">Local</div>
+                                                                ) : (
+                                                                    <div className="d-flex flex-column gap-1">
+                                                                        <div className="badge bg-info-subtle text-info border border-info-subtle w-fit">Fora</div>
+                                                                        {cong?.meetingTime && (
+                                                                            <div className="small text-muted" style={{ fontSize: '0.75rem' }}>
+                                                                                {cong.meetingTime}
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
+                                                                )}
+                                                            </>
+                                                        );
+                                                    })()}
                                                 </td>
-                                                <td>{agendamento.host || '-'}</td>
+                                                <td>
+                                                    <div className="d-flex flex-column gap-2">
+                                                        {agendamento.host || '-'}
+                                                        {agendamento.confirmed ? (
+                                                            <span className="badge bg-success-subtle text-success border border-success-subtle x-small">Confirmado</span>
+                                                        ) : (
+                                                            <span className="badge bg-warning-subtle text-warning border border-warning-subtle x-small">Pendente</span>
+                                                        )}
+                                                    </div>
+                                                </td>
                                                 <td className="text-end pe-3">
                                                     <button
                                                         className="btn btn-sm btn-outline-primary me-1 border-0"
@@ -506,14 +573,37 @@ const AgendaMain: React.FC = () => {
                         />
                     </div>
                     <div className="col-md-4 mb-3">
-                        <label className="form-label fw-bold">Anfitrião</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={formData.host}
-                            onChange={(e) => setFormData({ ...formData, host: e.target.value })}
-                            placeholder="Nome do anfitrião"
-                        />
+                        <label className="form-label fw-bold">Anfitrião (Opcional)</label>
+                        <div className="input-group">
+                            <select
+                                className="form-select w-50"
+                                value=""
+                                onChange={(e) => {
+                                    if (e.target.value) {
+                                        setFormData({ ...formData, host: e.target.value });
+                                    }
+                                }}
+                            >
+                                <option value="">Buscar na lista...</option>
+                                {oradores
+                                    .filter(s => s.specialAssignments?.includes('ANFITRIAO'))
+                                    .map(s => (
+                                        <option key={s.id} value={s.name}>
+                                            {s.name} ({s.congregation})
+                                        </option>
+                                    ))}
+                            </select>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={formData.host || ''}
+                                onChange={(e) => setFormData({ ...formData, host: e.target.value })}
+                                placeholder="Ou digite o nome..."
+                            />
+                        </div>
+                        <small className="text-muted d-block mt-1">
+                            Use o menu para selecionar um anfitrião aprovado ou digite manualmente.
+                        </small>
                     </div>
                 </div>
 
@@ -584,6 +674,22 @@ const AgendaMain: React.FC = () => {
                         <small className="text-muted d-block mt-1">
                             Selecione a congregação onde o orador fará o discurso.
                         </small>
+                    </div>
+                </div>
+
+                <div className="mb-3">
+                    <div className="form-check form-switch p-2 bg-light rounded border">
+                        <input
+                            className="form-check-input ms-0 me-3"
+                            type="checkbox"
+                            disabled={!formData.orador}
+                            id="speech-confirmed"
+                            checked={formData.confirmed}
+                            onChange={e => setFormData({ ...formData, confirmed: e.target.checked })}
+                        />
+                        <label className="form-check-label fw-bold" htmlFor="speech-confirmed">
+                            Discurso Confirmado com o Orador
+                        </label>
                     </div>
                 </div>
 

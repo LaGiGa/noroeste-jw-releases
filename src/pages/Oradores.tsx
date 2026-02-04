@@ -25,14 +25,19 @@ export const Oradores: React.FC = () => {
     const [editingEventosOrador, setEditingEventosOrador] = useState<Speaker | null>(null);
     const [deletingId, setDeletingId] = useState<string | null>(null);
     const [selectedDiscursos, setSelectedDiscursos] = useState<number[]>([]);
-    const [selectedEventos, setSelectedEventos] = useState<('ASSEMBLEIA' | 'CONGRESSO')[]>([]);
+    const [selectedAssignments, setSelectedAssignments] = useState<('ANFITRIAO' | 'CELEBRACAO' | 'DISCURSO_ESPECIAL' | 'OUTROS' | 'ASSEMBLEIA' | 'CONGRESSO')[]>([]);
     const [formData, setFormData] = useState({
         nome: '',
         telefone: '',
         congregacao: '',
         aprovadoFora: false,
+        privilege: '' as 'A' | 'SM' | '',
+        unavailablePeriods: [] as { startDate: string, endDate: string, reason?: string }[],
         discursos: [] as number[]
     });
+
+    const [filterCongregacao, setFilterCongregacao] = useState('');
+    const [filterAprovadoFora, setFilterAprovadoFora] = useState<boolean | null>(null);
 
     // Carregar dados do banco
     useEffect(() => {
@@ -73,8 +78,8 @@ export const Oradores: React.FC = () => {
 
     const getCongLabel = (name: string): string => {
         const c = congregacoes.find(x => x.name === name);
-        const loc = c?.city || c?.address;
-        return loc ? `${name} - ${loc}` : name;
+        const city = c?.city;
+        return city ? `${name} - ${city}` : name;
     };
 
     const handleOpenModal = (orador?: Speaker) => {
@@ -85,11 +90,21 @@ export const Oradores: React.FC = () => {
                 telefone: orador.phone,
                 congregacao: orador.congregation,
                 aprovadoFora: !!orador.approvedForOutside,
+                privilege: orador.privilege || '',
+                unavailablePeriods: orador.unavailablePeriods || [],
                 discursos: orador.qualifiedSpeeches
             });
         } else {
             setEditingOrador(null);
-            setFormData({ nome: '', telefone: '', congregacao: '', aprovadoFora: false, discursos: [] });
+            setFormData({
+                nome: '',
+                telefone: '',
+                congregacao: '',
+                aprovadoFora: false,
+                privilege: '',
+                unavailablePeriods: [],
+                discursos: []
+            });
         }
         setShowModal(true);
     };
@@ -97,7 +112,15 @@ export const Oradores: React.FC = () => {
     const handleCloseModal = () => {
         setShowModal(false);
         setEditingOrador(null);
-        setFormData({ nome: '', telefone: '', congregacao: '', aprovadoFora: false, discursos: [] });
+        setFormData({
+            nome: '',
+            telefone: '',
+            congregacao: '',
+            aprovadoFora: false,
+            privilege: '',
+            unavailablePeriods: [],
+            discursos: []
+        });
     };
 
     const handleSave = () => {
@@ -116,6 +139,8 @@ export const Oradores: React.FC = () => {
             phone: formData.telefone,
             congregation: formData.congregacao,
             approvedForOutside: formData.aprovadoFora,
+            privilege: formData.privilege || undefined,
+            unavailablePeriods: formData.unavailablePeriods,
             qualifiedSpeeches: editingOrador ? editingOrador.qualifiedSpeeches : [] // Manter discursos existentes se editando
         };
 
@@ -178,30 +203,30 @@ export const Oradores: React.FC = () => {
         }
     };
 
-    const handleEditEventos = (orador: Speaker) => {
+    const handleEditAtribuicoes = (orador: Speaker) => {
         setEditingEventosOrador(orador);
-        setSelectedEventos([...(orador.qualifiedForSpecialEvents || [])]);
+        setSelectedAssignments([...(orador.specialAssignments || [])]);
         setShowEditEventosModal(true);
     };
 
-    const handleToggleEvento = (tipo: 'ASSEMBLEIA' | 'CONGRESSO') => {
-        setSelectedEventos(prev =>
+    const handleToggleAssignment = (tipo: 'ANFITRIAO' | 'CELEBRACAO' | 'DISCURSO_ESPECIAL' | 'OUTROS' | 'ASSEMBLEIA' | 'CONGRESSO') => {
+        setSelectedAssignments(prev =>
             prev.includes(tipo)
                 ? prev.filter(t => t !== tipo)
                 : [...prev, tipo]
         );
     };
 
-    const handleSaveEventos = () => {
+    const handleSaveAssignments = () => {
         if (editingEventosOrador) {
             db.updateSpeaker(editingEventosOrador.id, {
-                qualifiedForSpecialEvents: selectedEventos.length > 0 ? selectedEventos : undefined
+                specialAssignments: selectedAssignments.length > 0 ? selectedAssignments : undefined
             });
             setOradores(db.getSpeakers().sort((a, b) => a.name.localeCompare(b.name)));
-            showSuccess('Eventos especiais atualizados com sucesso!');
+            showSuccess('Atribuições atualizadas com sucesso!');
             setShowEditEventosModal(false);
             setEditingEventosOrador(null);
-            setSelectedEventos([]);
+            setSelectedAssignments([]);
         }
     };
 
@@ -235,10 +260,14 @@ export const Oradores: React.FC = () => {
         showSuccess('Relatório de aprovados exportado com sucesso!');
     };
 
-    const filteredOradores = oradores.filter(o =>
-        o.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        o.congregation.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredOradores = oradores.filter(o => {
+        const matchesSearch = o.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            o.congregation.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesCong = !filterCongregacao || o.congregation === filterCongregacao;
+        const matchesAprovado = filterAprovadoFora === null || o.approvedForOutside === filterAprovadoFora;
+
+        return matchesSearch && matchesCong && matchesAprovado;
+    });
 
     return (
         <div>
@@ -257,16 +286,40 @@ export const Oradores: React.FC = () => {
                 </div>
             </div>
 
-            {/* Busca */}
-            <div className="card mb-4">
+            {/* Busca e Filtros */}
+            <div className="card mb-4 border-0 shadow-sm">
                 <div className="card-body">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Buscar por nome ou congregação..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
+                    <div className="row g-3">
+                        <div className="col-md-6">
+                            <label className="form-label small fw-bold">Buscar</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Buscar por nome ou congregação..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                        </div>
+                        <div className="col-md-3">
+                            <label className="form-label small fw-bold">Congregação</label>
+                            <select className="form-select" value={filterCongregacao} onChange={e => setFilterCongregacao(e.target.value)}>
+                                <option value="">Todas</option>
+                                {congregacoes.map(c => (
+                                    <option key={c.id} value={c.name}>
+                                        {c.name}{c.city ? ` - ${c.city}` : ''}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="col-md-3">
+                            <label className="form-label small fw-bold">Discurso Fora?</label>
+                            <select className="form-select" value={filterAprovadoFora === null ? '' : String(filterAprovadoFora)} onChange={e => setFilterAprovadoFora(e.target.value === '' ? null : e.target.value === 'true')}>
+                                <option value="">Todos</option>
+                                <option value="true">Apenas Aprovados</option>
+                                <option value="false">Apenas Não Aprovados</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -277,25 +330,40 @@ export const Oradores: React.FC = () => {
                         <table className="table table-hover mb-0">
                             <thead className="table-header-gradient">
                                 <tr>
-                                    <th>Nome</th>
+                                    <th>Nome / Privilégio</th>
                                     <th>Telefone</th>
                                     <th>Congregação</th>
-                                    <th>Fora?</th>
+                                    <th>Status</th>
                                     <th className="text-end">Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {filteredOradores.map((orador) => (
                                     <tr key={orador.id}>
-                                        <td>{orador.name}</td>
+                                        <td>
+                                            <div className="fw-bold">{orador.name}</div>
+                                            {orador.privilege && (
+                                                <span className={`badge ${orador.privilege === 'A' ? 'bg-primary' : 'bg-info'} x-small`}>
+                                                    {orador.privilege === 'A' ? 'Ancião' : 'Servo Ministerial'}
+                                                </span>
+                                            )}
+                                        </td>
                                         <td>{orador.phone || '-'}</td>
                                         <td>{getCongLabel(orador.congregation)}</td>
                                         <td>
-                                            {orador.approvedForOutside ? (
-                                                <span className="badge bg-success">Aprovado</span>
-                                            ) : (
-                                                <span className="badge bg-secondary opacity-50">Não</span>
-                                            )}
+                                            <div className="d-flex flex-column gap-1">
+                                                {orador.approvedForOutside ? (
+                                                    <span className="badge bg-success" style={{ width: 'fit-content' }}>Aprovado Fora</span>
+                                                ) : (
+                                                    <span className="badge bg-secondary opacity-50" style={{ width: 'fit-content' }}>Local</span>
+                                                )}
+                                                {orador.unavailablePeriods && orador.unavailablePeriods.some(p => {
+                                                    const now = new Date();
+                                                    return now >= new Date(p.startDate) && now <= new Date(p.endDate);
+                                                }) && (
+                                                        <span className="badge bg-danger" style={{ width: 'fit-content' }}>Indisponível Agora</span>
+                                                    )}
+                                            </div>
                                         </td>
                                         <td className="text-end">
                                             <button
@@ -314,8 +382,8 @@ export const Oradores: React.FC = () => {
                                             </button>
                                             <button
                                                 className="btn btn-sm btn-outline-warning me-1"
-                                                onClick={() => handleEditEventos(orador)}
-                                                title="Editar eventos especiais"
+                                                onClick={() => handleEditAtribuicoes(orador)}
+                                                title="Editar atribuições especiais"
                                             >
                                                 <FaCalendarCheck />
                                             </button>
@@ -360,58 +428,118 @@ export const Oradores: React.FC = () => {
                     </>
                 }
             >
-                <div className="mb-3">
-                    <label className="form-label">Nome *</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        value={formData.nome}
-                        onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-                        placeholder="Nome completo"
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Telefone</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        value={formData.telefone}
-                        onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
-                        placeholder="(00) 00000-0000"
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">
-                        <FaBuilding className="me-1" />
-                        Congregação de Origem *
-                    </label>
-                    <select
-                        className="form-select"
-                        value={formData.congregacao}
-                        onChange={(e) => setFormData({ ...formData, congregacao: e.target.value })}
-                    >
-                        <option value="">Selecione uma congregação</option>
-                        {[...congregacoes].sort((a, b) => a.name.localeCompare(b.name, 'pt-BR', { sensitivity: 'base' })).map((cong) => (
-                            <option key={cong.id} value={cong.name}>{getCongLabel(cong.name)}</option>
-                        ))}
-                    </select>
-                </div>
-                {formData.congregacao === 'Noroeste' && (
-                    <div className="mb-3">
-                        <div className="form-check form-switch mt-2">
-                            <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="aprovadoFora"
-                                checked={formData.aprovadoFora}
-                                onChange={(e) => setFormData({ ...formData, aprovadoFora: e.target.checked })}
-                            />
-                            <label className="form-check-label" htmlFor="aprovadoFora">
-                                Aprovado para fazer discursos fora
-                            </label>
-                        </div>
+                <div className="row">
+                    <div className="col-md-8 mb-3">
+                        <label className="form-label fw-bold">Nome *</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={formData.nome}
+                            onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
+                            placeholder="Nome completo"
+                        />
                     </div>
-                )}
+                    <div className="col-md-4 mb-3">
+                        <label className="form-label fw-bold">Privilégio</label>
+                        <select className="form-select" value={formData.privilege} onChange={e => setFormData({ ...formData, privilege: e.target.value as any })}>
+                            <option value="">Selecione...</option>
+                            <option value="A">Ancião</option>
+                            <option value="SM">Servo Ministerial</option>
+                        </select>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-6 mb-3">
+                        <label className="form-label fw-bold">Telefone</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={formData.telefone}
+                            onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
+                            placeholder="(00) 00000-0000"
+                        />
+                    </div>
+                    <div className="col-md-6 mb-3">
+                        <label className="form-label fw-bold">
+                            <FaBuilding className="me-1" />
+                            Congregação *
+                        </label>
+                        <select
+                            className="form-select"
+                            value={formData.congregacao}
+                            onChange={(e) => setFormData({ ...formData, congregacao: e.target.value })}
+                        >
+                            <option value="">Selecione...</option>
+                            {[...congregacoes].sort((a, b) => a.name.localeCompare(b.name, 'pt-BR', { sensitivity: 'base' })).map((cong) => (
+                                <option key={cong.id} value={cong.name}>{getCongLabel(cong.name)}</option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+
+                <div className="mb-4">
+                    <div className="form-check form-switch p-3 bg-light rounded border">
+                        <input
+                            className="form-check-input ms-0 me-3"
+                            type="checkbox"
+                            id="aprovadoFora"
+                            checked={formData.aprovadoFora}
+                            onChange={(e) => setFormData({ ...formData, aprovadoFora: e.target.checked })}
+                        />
+                        <label className="form-check-label fw-bold" htmlFor="aprovadoFora">
+                            Aprovado para fazer discursos fora
+                        </label>
+                    </div>
+                </div>
+
+                <div className="card mb-3 border-danger bg-danger bg-opacity-10">
+                    <div className="card-header bg-danger text-white py-2">
+                        <h6 className="mb-0 small fw-bold">Período de Indisponibilidade (ex: Férias)</h6>
+                    </div>
+                    <div className="card-body">
+                        <div className="row g-2 align-items-end">
+                            <div className="col-md-5">
+                                <label className="form-label x-small fw-bold">Início</label>
+                                <input type="date" className="form-control form-control-sm" id="unavail-start" />
+                            </div>
+                            <div className="col-md-5">
+                                <label className="form-label x-small fw-bold">Fim</label>
+                                <input type="date" className="form-control form-control-sm" id="unavail-end" />
+                            </div>
+                            <div className="col-md-2">
+                                <button className="btn btn-sm btn-danger w-100" onClick={() => {
+                                    const start = (document.getElementById('unavail-start') as HTMLInputElement).value;
+                                    const end = (document.getElementById('unavail-end') as HTMLInputElement).value;
+                                    if (start && end) {
+                                        setFormData({
+                                            ...formData,
+                                            unavailablePeriods: [...formData.unavailablePeriods, { startDate: start, endDate: end }]
+                                        });
+                                        (document.getElementById('unavail-start') as HTMLInputElement).value = '';
+                                        (document.getElementById('unavail-end') as HTMLInputElement).value = '';
+                                    } else {
+                                        showError('Selecione as datas de início e fim');
+                                    }
+                                }}>Add</button>
+                            </div>
+                        </div>
+
+                        {formData.unavailablePeriods.length > 0 && (
+                            <div className="mt-2">
+                                {formData.unavailablePeriods.map((p, i) => (
+                                    <div key={i} className="badge bg-white text-danger border border-danger d-flex justify-content-between align-items-center mb-1 p-2">
+                                        <span>{new Date(p.startDate + 'T00:00:00').toLocaleDateString('pt-BR')} - {new Date(p.endDate + 'T00:00:00').toLocaleDateString('pt-BR')}</span>
+                                        <button className="btn btn-sm btn-link text-danger p-0 ms-2" onClick={() => {
+                                            const newPeriods = [...formData.unavailablePeriods];
+                                            newPeriods.splice(i, 1);
+                                            setFormData({ ...formData, unavailablePeriods: newPeriods });
+                                        }}><FaTrash size={12} /></button>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </div>
             </Modal>
 
             {/* Modal Ver Discursos */}
@@ -505,14 +633,14 @@ export const Oradores: React.FC = () => {
             <Modal
                 isOpen={showEditEventosModal}
                 onClose={() => setShowEditEventosModal(false)}
-                title={`Eventos Especiais - ${editingEventosOrador?.name}`}
+                title={`Atribuições - ${editingEventosOrador?.name}`}
                 size="md"
                 footer={
                     <>
                         <button className="btn btn-secondary" onClick={() => setShowEditEventosModal(false)}>
                             Cancelar
                         </button>
-                        <button className="btn btn-primary" onClick={handleSaveEventos}>
+                        <button className="btn btn-primary" onClick={handleSaveAssignments}>
                             Salvar
                         </button>
                     </>
@@ -521,8 +649,7 @@ export const Oradores: React.FC = () => {
                 <div className="alert alert-info mb-3">
                     <small>
                         <FaCalendarCheck className="me-1" />
-                        Selecione os tipos de eventos especiais que este orador pode fazer.
-                        Apenas Assembleias e Congressos estão disponíveis.
+                        Selecione as atribuições que este orador está aprovado para realizar.
                     </small>
                 </div>
 
@@ -532,13 +659,13 @@ export const Oradores: React.FC = () => {
                             <input
                                 type="checkbox"
                                 className="form-check-input"
-                                id="evento-assembleia"
-                                checked={selectedEventos.includes('ASSEMBLEIA')}
-                                onChange={() => handleToggleEvento('ASSEMBLEIA')}
+                                id="attr-anfitrao"
+                                checked={selectedAssignments.includes('ANFITRIAO')}
+                                onChange={() => handleToggleAssignment('ANFITRIAO')}
                             />
-                            <label className="form-check-label" htmlFor="evento-assembleia">
-                                <strong>Assembleia</strong>
-                                <div className="small text-muted">Pode fazer discursos em assembleias</div>
+                            <label className="form-check-label" htmlFor="attr-anfitrao">
+                                <strong>Anfitrião</strong>
+                                <div className="small text-muted">Aprovado para ser anfitrião</div>
                             </label>
                         </div>
                     </div>
@@ -547,21 +674,84 @@ export const Oradores: React.FC = () => {
                             <input
                                 type="checkbox"
                                 className="form-check-input"
-                                id="evento-congresso"
-                                checked={selectedEventos.includes('CONGRESSO')}
-                                onChange={() => handleToggleEvento('CONGRESSO')}
+                                id="attr-celebra"
+                                checked={selectedAssignments.includes('CELEBRACAO')}
+                                onChange={() => handleToggleAssignment('CELEBRACAO')}
                             />
-                            <label className="form-check-label" htmlFor="evento-congresso">
-                                <strong>Congresso</strong>
-                                <div className="small text-muted">Pode fazer discursos em congressos</div>
+                            <label className="form-check-label" htmlFor="attr-celebra">
+                                <strong>Orador Celebração</strong>
+                                <div className="small text-muted">Aprovado para o discurso da Celebração</div>
+                            </label>
+                        </div>
+                    </div>
+                    <div className="col-md-6 mb-3">
+                        <div className="form-check">
+                            <input
+                                type="checkbox"
+                                className="form-check-input"
+                                id="attr-especial"
+                                checked={selectedAssignments.includes('DISCURSO_ESPECIAL')}
+                                onChange={() => handleToggleAssignment('DISCURSO_ESPECIAL')}
+                            />
+                            <label className="form-check-label" htmlFor="attr-especial">
+                                <strong>Orador Discurso Especial</strong>
+                                <div className="small text-muted">Aprovado para Discursos Especiais</div>
+                            </label>
+                        </div>
+                    </div>
+                    <div className="col-md-6 mb-3">
+                        <div className="form-check">
+                            <input
+                                type="checkbox"
+                                className="form-check-input"
+                                id="attr-outros"
+                                checked={selectedAssignments.includes('OUTROS')}
+                                onChange={() => handleToggleAssignment('OUTROS')}
+                            />
+                            <label className="form-check-label" htmlFor="attr-outros">
+                                <strong>Outros Eventos</strong>
+                                <div className="small text-muted">Outros eventos especiais</div>
                             </label>
                         </div>
                     </div>
                 </div>
 
-                {selectedEventos.length === 0 && (
+                <hr />
+                <h6 className="mb-3 small text-muted">Assembleias e Congressos (Legado)</h6>
+                <div className="row">
+                    <div className="col-md-6 mb-3">
+                        <div className="form-check">
+                            <input
+                                type="checkbox"
+                                className="form-check-input"
+                                id="attr-assem"
+                                checked={selectedAssignments.includes('ASSEMBLEIA')}
+                                onChange={() => handleToggleAssignment('ASSEMBLEIA')}
+                            />
+                            <label className="form-check-label" htmlFor="attr-assem">
+                                <strong>Assembleia</strong>
+                            </label>
+                        </div>
+                    </div>
+                    <div className="col-md-6 mb-3">
+                        <div className="form-check">
+                            <input
+                                type="checkbox"
+                                className="form-check-input"
+                                id="attr-cong"
+                                checked={selectedAssignments.includes('CONGRESSO')}
+                                onChange={() => handleToggleAssignment('CONGRESSO')}
+                            />
+                            <label className="form-check-label" htmlFor="attr-cong">
+                                <strong>Congresso</strong>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                {selectedAssignments.length === 0 && (
                     <div className="alert alert-warning mb-0">
-                        <small>Nenhum evento especial selecionado. Este orador não aparecerá nas opções ao criar eventos especiais.</small>
+                        <small>Nenhuma atribuição especial selecionada.</small>
                     </div>
                 )}
             </Modal>

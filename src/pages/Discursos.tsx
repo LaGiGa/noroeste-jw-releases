@@ -245,6 +245,11 @@ export const Discursos: React.FC = () => {
                     <div className="list-group overflow-auto custom-scrollbar" style={{ maxHeight: '350px' }}>
                         {filteredDiscursos.map(d => {
                             const restricted = isSpeechRestricted(d);
+                            const lastDate = [...historico]
+                                .filter(h => h.speechNumber === d.number || h.speechNumber.toString() === d.number.toString())
+                                .filter(h => h.congregation === 'Noroeste') // Apenas na congregação local
+                                .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0]?.date;
+
                             return (
                                 <div
                                     key={d.id}
@@ -258,10 +263,15 @@ export const Discursos: React.FC = () => {
                                         </span>
                                         <div>
                                             <div className="fw-bold">{d.theme}</div>
-                                            <div className="small text-muted">
-                                                {getCategory(d.theme)}
+                                            <div className="small text-muted d-flex gap-3 align-items-center">
+                                                <span>{getCategory(d.theme)}</span>
+                                                {lastDate && (
+                                                    <span className="text-primary fw-medium">
+                                                        Última vez: {new Date(lastDate + 'T00:00:00').toLocaleDateString('pt-BR')}
+                                                    </span>
+                                                )}
                                                 {restricted && (
-                                                    <span className="ms-3 text-warning">
+                                                    <span className="text-warning">
                                                         <FaExclamationTriangle className="me-1" />
                                                         Não usar até {new Date(d.doNotUseUntil! + 'T00:00:00').toLocaleDateString('pt-BR')}
                                                     </span>
@@ -328,7 +338,7 @@ export const Discursos: React.FC = () => {
                                         <label className="form-label small fw-bold">Congregação</label>
                                         <select className="form-select" value={formData.congregacao} onChange={e => setFormData({ ...formData, congregacao: e.target.value })}>
                                             <option value="">Selecione...</option>
-                                            {congregacoesCadastradas.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
+                                            {congregacoesCadastradas.map(c => <option key={c.id} value={c.name}>{c.name}{c.city ? ` - ${c.city}` : ''}</option>)}
                                         </select>
                                     </div>
                                 </div>
@@ -341,7 +351,7 @@ export const Discursos: React.FC = () => {
                                 <h5 className="mb-0">Histórico do Tema</h5>
                                 <select className="form-select form-select-sm w-auto" value={filterCongregacao} onChange={e => setFilterCongregacao(e.target.value)}>
                                     <option value="todas">Todas as congregações</option>
-                                    {congregacoesCadastradas.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
+                                    {congregacoesCadastradas.map(c => <option key={c.id} value={c.name}>{c.name}{c.city ? ` - ${c.city}` : ''}</option>)}
                                 </select>
                             </div>
                             <div className="card-body p-0">
@@ -360,7 +370,10 @@ export const Discursos: React.FC = () => {
                                                 <tr key={h.id}>
                                                     <td className="ps-3">{new Date(h.date + 'T00:00:00').toLocaleDateString('pt-BR')}</td>
                                                     <td>{h.speakerName}</td>
-                                                    <td>{h.congregation}</td>
+                                                    <td>{(() => {
+                                                        const c = congregacoesCadastradas.find(x => x.name === h.congregation);
+                                                        return c?.city ? `${h.congregation} - ${c.city}` : h.congregation;
+                                                    })()}</td>
                                                     <td className="text-end pe-3">
                                                         <button className="btn btn-sm btn-outline-danger" onClick={() => handleDeleteHistorico(h.id)}><FaTrash /></button>
                                                     </td>

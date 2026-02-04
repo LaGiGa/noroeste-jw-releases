@@ -40,8 +40,8 @@ export const Historico: React.FC = () => {
 
     const getCongLabel = (name: string): string => {
         const c = congregacoesCadastradas.find(x => x.name === name);
-        const loc = c?.city || c?.address;
-        return loc ? `${name} - ${loc}` : name;
+        const city = c?.city;
+        return city ? `${name} - ${city}` : name;
     };
 
     const [editingItem, setEditingItem] = useState<HistoryItem | null>(null);
@@ -70,7 +70,7 @@ export const Historico: React.FC = () => {
 
         try {
             db.updateHistoryItem(editingItem.id, editingItem);
-            setHistorico(prev => prev.map(item => 
+            setHistorico(prev => prev.map(item =>
                 item.id === editingItem.id ? editingItem : item
             ));
             setIsEditModalOpen(false);
@@ -124,7 +124,7 @@ export const Historico: React.FC = () => {
             horario: '09:30', // Horário padrão ou adicionar ao HistoryItem se necessário
             tema: item.speechTheme,
             orador: item.speakerName,
-            congregacao: item.congregation
+            congregacao: getCongLabel(item.congregation)
         }));
 
         const periodo = filters.dataInicio && filters.dataFim
@@ -414,7 +414,7 @@ export const Historico: React.FC = () => {
                                 <option value="">Selecione...</option>
                                 {congregacoesCadastradas.map((cong) => (
                                     <option key={cong.id} value={cong.name}>
-                                        {cong.name} {cong.city ? `- ${cong.city}` : ''}
+                                        {cong.name}{cong.city ? ` - ${cong.city}` : ''}
                                     </option>
                                 ))}
                             </select>
